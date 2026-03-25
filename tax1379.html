@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TAX-1379 - Centro de Postproducción Digital enfocado en producciones de cine y televisión. Único en su clase en México y América Latina.">
-    <title>TAX-1379 | Centro de Postproducción Digital</title>
+    <meta name="description" content="TAX-1379 — Centro de Postproducción Digital enfocado en producciones de cine y televisión. Corrección de color, masterización y salas de edición. Único en México y América Latina.">
+    <title>TAX-1379 | Centro de Postproducción Digital · Audiomaster Candiani</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,34 +12,38 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="js/components.js"></script>
+    <script src="js/components.js" defer></script>
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        noche: '#080A0F',
-                        panel: '#10141D',
-                        logoAmarillo: '#F2E718',
-                        logoVerde: '#0F9347',
-                        logoAzulClaro: '#3E74B5',
+                        noche:          '#080A0F',
+                        panel:          '#10141D',
+                        logoAmarillo:   '#F2E718',
+                        logoVerde:      '#0F9347',
+                        logoAzulClaro:  '#3E74B5',
                         logoAzulMarino: '#222B7A',
                         textoPrincipal: '#E0E6ED',
-                        textoSecundario: '#94A3B8'
+                        textoSecundario:'#94A3B8',
                     },
                     fontFamily: {
                         montserrat: ['Montserrat', 'sans-serif'],
-                        inter:['Inter', 'sans-serif'],
+                        inter:      ['Inter',      'sans-serif'],
                     },
                     keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
+                        fadeInUp: { '0%': { opacity:'0', transform:'translateY(24px)' }, '100%': { opacity:'1', transform:'translateY(0)' } },
+                        shimmer:  { '0%': { backgroundPosition:'-200% center' }, '100%': { backgroundPosition:'200% center' } },
+                        floatY:   { '0%,100%': { transform:'translateY(0)' }, '50%': { transform:'translateY(-12px)' } },
                     },
                     animation: {
-                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards'
+                        'fade-in-up':    'fadeInUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards',
+                        'fade-in-up-d1': 'fadeInUp 0.9s 0.15s cubic-bezier(0.16,1,0.3,1) both',
+                        'fade-in-up-d2': 'fadeInUp 0.9s 0.3s  cubic-bezier(0.16,1,0.3,1) both',
+                        'fade-in-up-d3': 'fadeInUp 0.9s 0.45s cubic-bezier(0.16,1,0.3,1) both',
+                        'shimmer':       'shimmer 4s linear infinite',
+                        'float':         'floatY 5s ease-in-out infinite',
                     }
                 }
             }
@@ -47,177 +51,555 @@
     </script>
 
     <style>
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        /* ---- Scrollbar ---- */
+        ::-webkit-scrollbar            { width: 4px; }
+        ::-webkit-scrollbar-track      { background: #080A0F; }
+        ::-webkit-scrollbar-thumb      { background: #0F9347; border-radius: 2px; }
+
+        /* ---- Parallax ---- */
         .parallax { background-attachment: fixed; background-position: center; background-size: cover; }
-        .hero-gradient { background: linear-gradient(to bottom, rgba(8,10,15,0.8), rgba(15,147,71,0.15), rgba(8,10,15,1)); }
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        @media (max-width: 768px) { .parallax { background-attachment: scroll; } }
+
+        /* ---- Hero gradient — green tint ---- */
+        .hero-gradient { background: linear-gradient(to bottom, rgba(8,10,15,0.7) 0%, rgba(15,147,71,0.15) 50%, rgba(8,10,15,1) 100%); }
+
+        /* ---- Reveal ---- */
+        .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.75s cubic-bezier(0.5,0,0,1), transform 0.75s cubic-bezier(0.5,0,0,1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-100 { transition-delay: 0.10s; }
+        .delay-200 { transition-delay: 0.20s; }
+        .delay-300 { transition-delay: 0.30s; }
+        .delay-400 { transition-delay: 0.40s; }
+
+        /* ---- Shimmer text ---- */
+        .shimmer-text {
+            background: linear-gradient(90deg, #0F9347, #3E74B5, #0F9347);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+
+        /* ---- Active nav ---- */
+        .nav-link { position: relative; }
+        .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:currentColor; border-radius:2px; transition:width 0.3s ease; }
+        .nav-link:hover::after { width:100%; }
+
+        /* ---- Service cards ---- */
+        .service-card { transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease; }
+        .service-card:hover { transform: translateY(-6px); }
+
+        /* ---- Pricing cards ---- */
+        .price-card { transition: transform 0.35s ease, border-color 0.35s ease; }
+        .price-card:hover { transform: translateY(-4px); }
+
+        /* ---- Noise ---- */
+        .noise::after { content:''; position:absolute; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events:none; opacity:0.4; }
+
+        /* ---- Color wheel decoration ---- */
+        .color-wheel { background: conic-gradient(from 0deg, #F2E718, #0F9347, #3E74B5, #222B7A, #F2E718); border-radius:50%; }
+
+        /* ---- Process step connector ---- */
+        .step-connector::before { content:''; position:absolute; top:24px; left:calc(50% + 28px); width:calc(100% - 56px); height:1px; background:linear-gradient(90deg, rgba(15,147,71,0.4), rgba(62,116,181,0.4)); }
     </style>
 </head>
-<body class="bg-noche text-textoPrincipal font-inter antialiased selection:bg-logoVerde selection:text-noche">
+<body class="bg-noche text-textoPrincipal font-inter antialiased selection:bg-logoVerde selection:text-noche overflow-x-hidden">
 
+    <!-- ===================== NAVBAR ===================== -->
     <div id="navbar-container"></div>
 
-    <section id="inicio" class="parallax relative h-screen flex items-center justify-center overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=2000');">
+    <!-- ===================== HERO ===================== -->
+    <section id="inicio" class="parallax relative h-screen min-h-[640px] flex items-center justify-center overflow-hidden noise"
+             style="background-image: url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=2000');">
         <div class="absolute inset-0 hero-gradient"></div>
 
-        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto mt-16 animate-fade-in-up">
-            <div class="inline-block mb-8 px-5 py-1.5 rounded-full border border-logoVerde/30 bg-logoVerde/10 text-logoVerde text-[13px] font-bold uppercase tracking-[0.3em] backdrop-blur-sm shadow-[0_0_15px_rgba(15,147,71,0.2)]">
-                División de Cine y TV
+        <!-- Floating color wheel -->
+        <div class="absolute top-1/2 -translate-y-1/2 right-[8%] w-48 h-48 md:w-72 md:h-72 color-wheel opacity-10 blur-sm animate-float pointer-events-none" aria-hidden="true"></div>
+        <div class="absolute top-1/2 -translate-y-1/2 right-[8%] w-40 h-40 md:w-60 md:h-60 rounded-full border-2 border-logoVerde/20 animate-float pointer-events-none" style="animation-delay:-2.5s;" aria-hidden="true"></div>
+
+        <div class="relative z-10 text-center px-5 max-w-5xl mx-auto mt-20">
+            <div class="animate-fade-in-up inline-flex items-center gap-2 mb-8 px-5 py-1.5 rounded-full border border-logoVerde/30 bg-logoVerde/10 text-logoVerde text-[11px] font-bold uppercase tracking-[0.35em] backdrop-blur-sm shadow-[0_0_20px_rgba(15,147,71,0.2)]">
+                <i data-lucide="clapperboard" class="w-3.5 h-3.5"></i>
+                División de Cine y TV · Audiomaster Candiani
             </div>
 
-            <h1 class="font-montserrat text-6xl md:text-9xl text-white tracking-tighter font-black mb-4 drop-shadow-2xl">
-                TAX<span class="text-transparent bg-clip-text bg-gradient-to-r from-logoVerde to-logoAzulClaro">-1379</span>
+            <h1 class="animate-fade-in-up-d1 font-montserrat text-7xl sm:text-9xl text-white tracking-tighter font-black mb-4 drop-shadow-2xl">
+                TAX<span class="shimmer-text">-1379</span>
             </h1>
-            <p class="text-xl md:text-3xl font-montserrat font-bold text-textoSecundario uppercase tracking-[0.2em] mb-8">
+
+            <p class="animate-fade-in-up-d2 text-xl md:text-3xl font-montserrat font-bold text-textoSecundario uppercase tracking-[0.18em] mb-6">
                 Centro de Postproducción Digital
             </p>
-            <h2 class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed mb-10">
-                Único en su clase en México y América Latina. Innovación y precisión visual para la industria del entretenimiento.
-            </h2>
-            <div class="flex flex-col md:flex-row gap-5 justify-center">
-                <a href="#contacto" class="bg-logoVerde text-white px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(15,147,71,0.4)] hover:-translate-y-1 transition-all duration-300">
+
+            <p class="animate-fade-in-up-d3 text-base md:text-lg text-gray-400 max-w-2xl mx-auto font-light leading-relaxed mb-10">
+                Único en su clase en México y América Latina. Innovación y precisión visual para la industria del entretenimiento de alto nivel.
+            </p>
+
+            <div class="animate-fade-in-up-d3 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#contacto"
+                   class="group bg-logoVerde text-white px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest hover:shadow-[0_0_35px_rgba(15,147,71,0.5)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
                     Agendar Sala
+                    <i data-lucide="calendar" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
                 </a>
-                <a href="https://tax1379.com.mx" target="_blank" class="bg-white/5 border border-white/10 backdrop-blur-md text-white px-10 py-4 rounded-full font-bold text-sm uppercase tracking-widest hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3">
-                    Sitio Web Oficial <i data-lucide="external-link" class="w-4 h-4"></i>
+                <a href="https://tax1379.com.mx" target="_blank" rel="noopener noreferrer"
+                   class="bg-white/5 border border-white/15 backdrop-blur-md text-white px-10 py-4 rounded-full font-bold text-sm uppercase tracking-widest hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                    Sitio Oficial
+                    <i data-lucide="external-link" class="w-4 h-4"></i>
                 </a>
             </div>
         </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50" aria-hidden="true">
+            <span class="text-[9px] uppercase tracking-[0.4em] text-textoSecundario">Scroll</span>
+            <div class="w-px h-10 bg-gradient-to-b from-logoVerde to-transparent"></div>
+        </div>
     </section>
 
+    <!-- ===================== ABOUT TAX ===================== -->
     <section id="servicios" class="py-32 px-6 max-w-7xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-20 items-center">
+        <div class="grid md:grid-cols-2 gap-16 md:gap-24 items-center">
             <div class="reveal">
-                <h2 class="font-montserrat text-4xl md:text-5xl font-black text-white mb-8 tracking-tighter uppercase">
-                    La Visión del <span class="text-logoVerde">Color y Masterización</span>
+                <div class="inline-flex items-center gap-2 mb-5 text-logoVerde text-[11px] font-bold uppercase tracking-widest">
+                    <div class="w-6 h-px bg-logoVerde"></div>
+                    La Visión del Color
+                </div>
+                <h2 class="font-montserrat text-4xl md:text-5xl font-black text-white mb-8 tracking-tighter uppercase leading-none">
+                    Color y <span class="text-logoVerde">Masterización</span><br>de Clase Mundial
                 </h2>
-                <p class="text-lg text-textoSecundario font-light leading-relaxed mb-6">
-                    TAX 1379 es un centro de postproducción digital de élite enfocado en elevar el valor de producción de cine y televisión.
+                <p class="text-base text-textoSecundario font-light leading-relaxed mb-5">
+                    TAX-1379 es el centro de postproducción visual de referencia en México. Operamos con la tecnología más avanzada del mercado, siguiendo las mejores prácticas del sector global para elevar el valor de producción de cada proyecto.
                 </p>
-                <p class="text-lg text-textoSecundario font-light leading-relaxed mb-10">
-                    Utilizamos equipos con las últimas innovaciones en tecnología visual y procesos basados en las mejores prácticas del sector global, garantizando que la visión del director llegue intacta a la pantalla.
+                <p class="text-base text-textoSecundario font-light leading-relaxed mb-10">
+                    Desde el etalonaje hasta la masterización final, garantizamos que la visión del director llegue intacta —y potenciada— a cada pantalla del mundo.
                 </p>
-                <div class="flex gap-4">
-                    <div class="w-12 h-1 bg-logoVerde rounded-full"></div>
-                    <div class="w-4 h-1 bg-logoAzulClaro rounded-full"></div>
+
+                <!-- Certifications -->
+                <div class="flex flex-wrap gap-3">
+                    <span class="px-4 py-2 rounded-full bg-logoVerde/10 border border-logoVerde/20 text-logoVerde text-xs font-bold uppercase tracking-wider">Dolby Vision</span>
+                    <span class="px-4 py-2 rounded-full bg-logoAzulClaro/10 border border-logoAzulClaro/20 text-logoAzulClaro text-xs font-bold uppercase tracking-wider">HDR10+</span>
+                    <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white text-xs font-bold uppercase tracking-wider">Netflix Approved</span>
+                    <span class="px-4 py-2 rounded-full bg-logoAmarillo/10 border border-logoAmarillo/20 text-logoAmarillo text-xs font-bold uppercase tracking-wider">DCI 4K</span>
                 </div>
             </div>
 
-            <div class="grid gap-6">
-                <div class="reveal delay-100 group p-8 bg-panel rounded-3xl border border-white/5 hover:border-logoVerde/50 hover:shadow-[0_10px_30px_-10px_rgba(15,147,71,0.2)] transition-all duration-500 flex items-start gap-6">
+            <div class="reveal delay-200 grid grid-cols-2 gap-5">
+                <div class="service-card group col-span-2 p-8 bg-panel rounded-3xl border border-white/5 hover:border-logoVerde/50 hover:shadow-[0_12px_40px_-10px_rgba(15,147,71,0.2)] flex items-start gap-5">
                     <div class="w-14 h-14 shrink-0 rounded-2xl bg-logoVerde/10 flex items-center justify-center text-logoVerde group-hover:scale-110 transition-transform">
-                        <i data-lucide="aperture"></i>
+                        <i data-lucide="aperture" class="w-6 h-6"></i>
                     </div>
                     <div>
-                        <h3 class="font-montserrat text-xl font-bold text-white mb-2">Corrección de Color</h3>
-                        <p class="text-sm font-light text-textoSecundario">Etalonaje digital avanzado, HDR y calibración cinematográfica para estándares de proyección internacional.</p>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-2">Corrección de Color</h3>
+                        <p class="text-sm font-light text-textoSecundario">Etalonaje digital avanzado, HDR y calibración cinematográfica. Monitores OLED de referencia calibrados a DCI-P3 y BT.2020.</p>
                     </div>
                 </div>
-                <div class="reveal delay-200 group p-8 bg-panel rounded-3xl border border-white/5 hover:border-logoAzulClaro/50 hover:shadow-[0_10px_30px_-10px_rgba(62,116,181,0.2)] transition-all duration-500 flex items-start gap-6">
-                    <div class="w-14 h-14 shrink-0 rounded-2xl bg-logoAzulClaro/10 flex items-center justify-center text-logoAzulClaro group-hover:scale-110 transition-transform">
-                        <i data-lucide="layers"></i>
+                <div class="service-card group p-6 bg-panel rounded-3xl border border-white/5 hover:border-logoAzulClaro/50 hover:shadow-[0_12px_40px_-10px_rgba(62,116,181,0.2)] flex flex-col gap-4">
+                    <div class="w-12 h-12 shrink-0 rounded-2xl bg-logoAzulClaro/10 flex items-center justify-center text-logoAzulClaro group-hover:scale-110 transition-transform">
+                        <i data-lucide="layers" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h3 class="font-montserrat text-xl font-bold text-white mb-2">Masterización Digital</h3>
-                        <p class="text-sm font-light text-textoSecundario">Creación de masters para plataformas VOD, DCP para cine y control de calidad visual riguroso.</p>
+                        <h3 class="font-montserrat text-base font-black text-white mb-1">Masterización</h3>
+                        <p class="text-xs font-light text-textoSecundario">DCP, VOD, UHD Blu-ray y más.</p>
                     </div>
                 </div>
-                <div class="reveal delay-300 group p-8 bg-panel rounded-3xl border border-white/5 hover:border-white/30 transition-all duration-500 flex items-start gap-6">
-                    <div class="w-14 h-14 shrink-0 rounded-2xl bg-white/5 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
-                        <i data-lucide="monitor-play"></i>
+                <div class="service-card group p-6 bg-panel rounded-3xl border border-white/5 hover:border-white/30 flex flex-col gap-4">
+                    <div class="w-12 h-12 shrink-0 rounded-2xl bg-white/5 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                        <i data-lucide="monitor-play" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h3 class="font-montserrat text-xl font-bold text-white mb-2">Renta de Salas de Edición</h3>
-                        <p class="text-sm font-light text-textoSecundario">Espacios privados, acondicionados acústicamente y equipados con hardware de máximo rendimiento.</p>
+                        <h3 class="font-montserrat text-base font-black text-white mb-1">Salas de Edición</h3>
+                        <p class="text-xs font-light text-textoSecundario">Privadas, acústicamente aisladas.</p>
+                    </div>
+                </div>
+                <div class="service-card group p-6 bg-panel rounded-3xl border border-white/5 hover:border-logoAmarillo/40 flex flex-col gap-4">
+                    <div class="w-12 h-12 shrink-0 rounded-2xl bg-logoAmarillo/10 flex items-center justify-center text-logoAmarillo group-hover:scale-110 transition-transform">
+                        <i data-lucide="projector" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-montserrat text-base font-black text-white mb-1">Sala de Proyección</h3>
+                        <p class="text-xs font-light text-textoSecundario">Láser 4K · Dolby Atmos.</p>
+                    </div>
+                </div>
+                <div class="service-card group p-6 bg-panel rounded-3xl border border-white/5 hover:border-logoVerde/40 flex flex-col gap-4">
+                    <div class="w-12 h-12 shrink-0 rounded-2xl bg-logoVerde/10 flex items-center justify-center text-logoVerde group-hover:scale-110 transition-transform">
+                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-montserrat text-base font-black text-white mb-1">QC Visual</h3>
+                        <p class="text-xs font-light text-textoSecundario">Control de calidad riguroso.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contacto" class="py-24 max-w-7xl mx-auto px-6">
-        <div class="reveal grid md:grid-cols-2 gap-12 bg-panel p-8 md:p-16 rounded-[3rem] border border-white/5 overflow-hidden relative shadow-2xl">
+    <!-- ===================== PROCESS ===================== -->
+    <section class="py-32 bg-panel/40 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <div class="inline-flex items-center gap-2 mb-5 text-logoAzulClaro text-[11px] font-bold uppercase tracking-widest">
+                    <div class="w-6 h-px bg-logoAzulClaro"></div>
+                    Flujo de Trabajo
+                    <div class="w-6 h-px bg-logoAzulClaro"></div>
+                </div>
+                <h2 class="font-montserrat text-4xl md:text-5xl font-black text-white tracking-tighter uppercase">
+                    Proceso <span class="text-logoAzulClaro">Probado</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="reveal relative flex flex-col items-center text-center gap-4 p-8 rounded-3xl bg-noche border border-white/5">
+                    <div class="w-12 h-12 rounded-2xl bg-logoAmarillo/15 flex items-center justify-center text-logoAmarillo font-montserrat font-black text-lg">01</div>
+                    <h3 class="font-montserrat font-black text-white">Recepción de Material</h3>
+                    <p class="text-xs text-textoSecundario font-light">Revisión técnica del material fuente y verificación de especificaciones del proyecto.</p>
+                </div>
+                <div class="reveal delay-100 relative flex flex-col items-center text-center gap-4 p-8 rounded-3xl bg-noche border border-white/5">
+                    <div class="w-12 h-12 rounded-2xl bg-logoVerde/15 flex items-center justify-center text-logoVerde font-montserrat font-black text-lg">02</div>
+                    <h3 class="font-montserrat font-black text-white">Etalonaje</h3>
+                    <p class="text-xs text-textoSecundario font-light">Corrección de color primaria y secundaria con conformado en DaVinci Resolve Studio.</p>
+                </div>
+                <div class="reveal delay-200 relative flex flex-col items-center text-center gap-4 p-8 rounded-3xl bg-noche border border-white/5">
+                    <div class="w-12 h-12 rounded-2xl bg-logoAzulClaro/15 flex items-center justify-center text-logoAzulClaro font-montserrat font-black text-lg">03</div>
+                    <h3 class="font-montserrat font-black text-white">QC y Aprobación</h3>
+                    <p class="text-xs text-textoSecundario font-light">Control de calidad técnico y sesión de revisión con el cliente en sala de proyección.</p>
+                </div>
+                <div class="reveal delay-300 relative flex flex-col items-center text-center gap-4 p-8 rounded-3xl bg-noche border border-white/5">
+                    <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-white font-montserrat font-black text-lg">04</div>
+                    <h3 class="font-montserrat font-black text-white">Entrega de Masters</h3>
+                    <p class="text-xs text-textoSecundario font-light">Generación y entrega de masters en todos los formatos requeridos por plataforma o distribuidor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== TECH / EQUIPMENT ===================== -->
+    <section class="py-32 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16 reveal">
+            <div class="inline-flex items-center gap-2 mb-5 text-logoVerde text-[11px] font-bold uppercase tracking-widest">
+                <div class="w-6 h-px bg-logoVerde"></div>
+                Equipamiento
+                <div class="w-6 h-px bg-logoVerde"></div>
+            </div>
+            <h2 class="font-montserrat text-4xl md:text-5xl font-black text-white tracking-tighter uppercase">
+                Tecnología de <span class="text-logoVerde">Vanguardia</span>
+            </h2>
+        </div>
+
+        <div class="reveal grid md:grid-cols-3 gap-6">
+            <!-- Monitor card -->
+            <div class="col-span-1 md:col-span-2 relative overflow-hidden rounded-3xl p-8 md:p-10 bg-panel border border-white/5 hover:border-logoVerde/30 transition-colors">
+                <div class="absolute top-0 right-0 w-48 h-48 bg-logoVerde/5 rounded-full blur-[60px] pointer-events-none"></div>
+                <i data-lucide="monitor" class="w-8 h-8 text-logoVerde mb-5"></i>
+                <h3 class="font-montserrat text-2xl font-black text-white mb-3">Monitores OLED de Referencia</h3>
+                <p class="text-sm text-textoSecundario font-light mb-6 max-w-md">Sony BVM-HX310 con calibración DCI-P3 y BT.2020. Visualización de material HDR con precisión de estudio de Hollywood.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs px-3 py-1.5 rounded-full bg-logoVerde/10 text-logoVerde border border-logoVerde/20 font-bold">4K · 10-bit</span>
+                    <span class="text-xs px-3 py-1.5 rounded-full bg-white/5 text-textoSecundario border border-white/10 font-bold">HDR10+</span>
+                    <span class="text-xs px-3 py-1.5 rounded-full bg-white/5 text-textoSecundario border border-white/10 font-bold">Dolby Vision</span>
+                    <span class="text-xs px-3 py-1.5 rounded-full bg-white/5 text-textoSecundario border border-white/10 font-bold">DCI-P3</span>
+                </div>
+            </div>
+
+            <div class="reveal delay-100 space-y-5">
+                <div class="p-6 bg-panel rounded-3xl border border-white/5 hover:border-logoAzulClaro/30 transition-colors">
+                    <i data-lucide="cpu" class="w-6 h-6 text-logoAzulClaro mb-3"></i>
+                    <h3 class="font-montserrat font-black text-base text-white mb-1">DaVinci Resolve Studio</h3>
+                    <p class="text-xs text-textoSecundario font-light">Suite completa de etalonaje, edición y VFX.</p>
+                </div>
+                <div class="p-6 bg-panel rounded-3xl border border-white/5 hover:border-logoAmarillo/30 transition-colors">
+                    <i data-lucide="hard-drive" class="w-6 h-6 text-logoAmarillo mb-3"></i>
+                    <h3 class="font-montserrat font-black text-base text-white mb-1">Almacenamiento NVMe</h3>
+                    <p class="text-xs text-textoSecundario font-light">Velocidades de lectura sobre 7 GB/s para flujos RAW y BRAW sin cortes.</p>
+                </div>
+                <div class="p-6 bg-panel rounded-3xl border border-white/5 hover:border-logoVerde/30 transition-colors">
+                    <i data-lucide="zap" class="w-6 h-6 text-logoVerde mb-3"></i>
+                    <h3 class="font-montserrat font-black text-base text-white mb-1">GPU Aceleración</h3>
+                    <p class="text-xs text-textoSecundario font-light">NVIDIA RTX Series para renderizado en tiempo real.</p>
+                </div>
+            </div>
+
+            <!-- Full-width bottom card -->
+            <div class="reveal delay-200 col-span-1 md:col-span-3 relative overflow-hidden rounded-3xl p-8 md:p-10 bg-gradient-to-r from-logoVerde/10 via-panel to-logoAzulClaro/10 border border-logoVerde/20">
+                <div class="grid md:grid-cols-4 gap-8 items-center">
+                    <div class="md:col-span-2">
+                        <h3 class="font-montserrat text-2xl font-black text-white mb-2">Sala de Proyección 4K Láser</h3>
+                        <p class="text-sm text-textoSecundario font-light">Pantalla de 8 metros, sistema Dolby Atmos con 32 canales de audio para screening de alta fidelidad cinematográfica.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-3 md:col-span-2 md:justify-end">
+                        <div class="text-center p-4 bg-noche/50 rounded-2xl border border-white/5 min-w-[80px]">
+                            <p class="font-montserrat font-black text-2xl text-logoVerde">4K</p>
+                            <p class="text-[10px] text-textoSecundario uppercase tracking-wider">Resolución</p>
+                        </div>
+                        <div class="text-center p-4 bg-noche/50 rounded-2xl border border-white/5 min-w-[80px]">
+                            <p class="font-montserrat font-black text-2xl text-logoAzulClaro">32</p>
+                            <p class="text-[10px] text-textoSecundario uppercase tracking-wider">Canales Audio</p>
+                        </div>
+                        <div class="text-center p-4 bg-noche/50 rounded-2xl border border-white/5 min-w-[80px]">
+                            <p class="font-montserrat font-black text-2xl text-logoAmarillo">8m</p>
+                            <p class="text-[10px] text-textoSecundario uppercase tracking-wider">Pantalla</p>
+                        </div>
+                        <div class="text-center p-4 bg-noche/50 rounded-2xl border border-white/5 min-w-[80px]">
+                            <p class="font-montserrat font-black text-2xl text-white">HDR</p>
+                            <p class="text-[10px] text-textoSecundario uppercase tracking-wider">Certificado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== PRICING / ROOM RENTAL ===================== -->
+    <section class="py-32 bg-panel/40 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-flex items-center gap-2 mb-5 text-logoAmarillo text-[11px] font-bold uppercase tracking-widest">
+                    <div class="w-6 h-px bg-logoAmarillo"></div>
+                    Renta de Salas
+                    <div class="w-6 h-px bg-logoAmarillo"></div>
+                </div>
+                <h2 class="font-montserrat text-4xl md:text-5xl font-black text-white tracking-tighter uppercase">
+                    Espacios para <span class="text-logoAmarillo">Crear</span>
+                </h2>
+                <p class="text-textoSecundario mt-4 font-light max-w-xl mx-auto">Salas privadas disponibles por hora, día o semana. Contacta para tarifas personalizadas.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Sala A -->
+                <div class="reveal price-card p-8 rounded-3xl bg-noche border border-white/5 hover:border-logoVerde/40 hover:shadow-[0_16px_50px_-10px_rgba(15,147,71,0.15)] flex flex-col">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-logoVerde/10 flex items-center justify-center">
+                            <i data-lucide="monitor-check" class="w-5 h-5 text-logoVerde"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-logoVerde font-bold uppercase tracking-widest">Sala A</p>
+                            <p class="font-montserrat font-black text-white text-lg leading-none">Corrección de Color</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 text-sm text-textoSecundario font-light flex-1 mb-8">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoVerde shrink-0"></i>Monitor OLED Sony 31" 4K</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoVerde shrink-0"></i>DaVinci Resolve Studio</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoVerde shrink-0"></i>Panel Tangent Wave 2</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoVerde shrink-0"></i>Almacenamiento NVMe 8TB</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoVerde shrink-0"></i>Acceso 24/7</li>
+                    </ul>
+                    <a href="#contacto" class="w-full block text-center border border-logoVerde/40 text-logoVerde py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-logoVerde hover:text-white transition-all duration-300">
+                        Solicitar Cotización
+                    </a>
+                </div>
+
+                <!-- Sala B — Destacada -->
+                <div class="reveal delay-100 price-card relative p-8 rounded-3xl bg-gradient-to-b from-logoVerde/15 to-noche border border-logoVerde/40 hover:border-logoVerde/70 hover:shadow-[0_16px_60px_-10px_rgba(15,147,71,0.3)] flex flex-col">
+                    <div class="absolute top-4 right-4 px-3 py-1 bg-logoVerde text-white text-[9px] font-black uppercase tracking-widest rounded-full">Popular</div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-logoVerde/20 flex items-center justify-center">
+                            <i data-lucide="film" class="w-5 h-5 text-logoVerde"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-logoVerde font-bold uppercase tracking-widest">Sala B</p>
+                            <p class="font-montserrat font-black text-white text-lg leading-none">Suite de Edición</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 text-sm text-textoSecundario font-light flex-1 mb-8">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoVerde shrink-0"></i>Monitores 4K duales</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoVerde shrink-0"></i>Avid Media Composer + Premiere</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoVerde shrink-0"></i>Mesa de mezcla de audio</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoVerde shrink-0"></i>Almacenamiento compartido 40TB</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoVerde shrink-0"></i>Soporte técnico incluido</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoVerde shrink-0"></i>Acceso 24/7</li>
+                    </ul>
+                    <a href="#contacto" class="w-full block text-center bg-logoVerde text-white py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:shadow-[0_0_30px_rgba(15,147,71,0.4)] hover:-translate-y-0.5 transition-all duration-300">
+                        Solicitar Cotización
+                    </a>
+                </div>
+
+                <!-- Sala Proyección -->
+                <div class="reveal delay-200 price-card p-8 rounded-3xl bg-noche border border-white/5 hover:border-logoAzulClaro/40 hover:shadow-[0_16px_50px_-10px_rgba(62,116,181,0.15)] flex flex-col">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-logoAzulClaro/10 flex items-center justify-center">
+                            <i data-lucide="projector" class="w-5 h-5 text-logoAzulClaro"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-logoAzulClaro font-bold uppercase tracking-widest">Sala C</p>
+                            <p class="font-montserrat font-black text-white text-lg leading-none">Sala de Proyección</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 text-sm text-textoSecundario font-light flex-1 mb-8">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoAzulClaro shrink-0"></i>Proyector Láser 4K · 8 metros</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoAzulClaro shrink-0"></i>Dolby Atmos 32 canales</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoAzulClaro shrink-0"></i>Capacidad 20 personas</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoAzulClaro shrink-0"></i>Pantalla certificada DCI</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-logoAzulClaro shrink-0"></i>Operador incluido</li>
+                    </ul>
+                    <a href="#contacto" class="w-full block text-center border border-logoAzulClaro/40 text-logoAzulClaro py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-logoAzulClaro hover:text-white transition-all duration-300">
+                        Solicitar Cotización
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== CONTACTO ===================== -->
+    <section id="contacto" class="py-32 max-w-7xl mx-auto px-6">
+        <div class="reveal relative overflow-hidden grid md:grid-cols-2 gap-12 bg-panel p-8 md:p-16 rounded-[3rem] border border-white/5 shadow-2xl">
             <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-logoVerde/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-logoAzulClaro/5 rounded-full blur-[80px] -z-10 pointer-events-none"></div>
 
             <div class="flex flex-col justify-center">
-                <h3 class="text-3xl font-montserrat font-black text-white mb-4">Contacta a <span class="text-logoVerde">TAX-1379</span></h3>
-                <p class="text-textoSecundario font-light mb-10 text-sm">Reserva tu sala de edición o cotiza tu proyecto de postproducción.</p>
-
-                <div class="space-y-8 text-sm text-textoSecundario font-medium">
-                    <div class="flex items-center gap-5 group">
-                        <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-logoVerde transition-colors">
-                            <i data-lucide="map-pin" class="text-logoVerde w-5"></i>
-                        </div>
-                        <p>Taxqueña 1379, Col. Campestre Churubusco,<br>CDMX CP 04200, México</p>
-                    </div>
-                    <div class="flex items-center gap-5 group">
-                        <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-white transition-colors">
-                            <i data-lucide="phone" class="text-white w-5"></i>
-                        </div>
-                        <p>(52+55) 9183-2460 al 69</p>
-                    </div>
-                    <div class="flex items-center gap-5 group">
-                        <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-logoAzulClaro transition-colors">
-                            <i data-lucide="mail" class="text-logoAzulClaro w-5"></i>
-                        </div>
-                        <p>tax1379@candiani.tv</p>
-                    </div>
+                <div class="inline-flex items-center gap-2 mb-4 text-logoVerde text-[11px] font-bold uppercase tracking-widest">
+                    <i data-lucide="calendar-check" class="w-3.5 h-3.5"></i>
+                    Reservaciones
                 </div>
+                <h3 class="text-3xl md:text-4xl font-montserrat font-black text-white mb-4">Contacta a <span class="text-logoVerde">TAX-1379</span></h3>
+                <p class="text-textoSecundario font-light mb-10 text-sm leading-relaxed">Reserva tu sala de edición, agenda una sesión de corrección de color o cotiza tu proyecto de postproducción visual.</p>
+
+                <div class="space-y-6 text-sm text-textoSecundario font-medium">
+                    <a href="https://maps.google.com/?q=Taxqueña+1379+CDMX" target="_blank" rel="noopener noreferrer"
+                       class="flex items-center gap-5 group hover:text-textoPrincipal transition-colors">
+                        <div class="w-12 h-12 shrink-0 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-logoVerde transition-colors">
+                            <i data-lucide="map-pin" class="text-logoVerde w-5 h-5"></i>
+                        </div>
+                        <span>Taxqueña 1379, Col. Campestre Churubusco,<br>CDMX CP 04200, México</span>
+                    </a>
+                    <a href="tel:+525591832460" class="flex items-center gap-5 group hover:text-textoPrincipal transition-colors">
+                        <div class="w-12 h-12 shrink-0 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-white transition-colors">
+                            <i data-lucide="phone" class="text-white w-5 h-5"></i>
+                        </div>
+                        <span>(52+55) 9183-2460 al 69</span>
+                    </a>
+                    <a href="mailto:tax1379@candiani.tv" class="flex items-center gap-5 group hover:text-textoPrincipal transition-colors">
+                        <div class="w-12 h-12 shrink-0 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-logoAzulClaro transition-colors">
+                            <i data-lucide="mail" class="text-logoAzulClaro w-5 h-5"></i>
+                        </div>
+                        <span>tax1379@candiani.tv</span>
+                    </a>
+                </div>
+
+                <!-- Back link -->
+                <a href="index.html" class="mt-10 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-textoSecundario hover:text-white transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    Volver a Audiomaster Candiani
+                </a>
             </div>
 
-            <form class="space-y-5" onsubmit="event.preventDefault(); alert('¡Mensaje enviado a TAX-1379!');">
-                <div class="grid grid-cols-2 gap-5">
-                    <input type="text" placeholder="Nombre" required class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoVerde focus:bg-noche outline-none transition-all text-white placeholder-textoSecundario/50">
-                    <input type="tel" placeholder="Teléfono" class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoVerde focus:bg-noche outline-none transition-all text-white placeholder-textoSecundario/50">
+            <form id="tax-contact-form" class="space-y-5" novalidate>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div class="flex flex-col gap-1.5">
+                        <label for="t-nombre" class="text-xs font-bold text-textoSecundario uppercase tracking-wider">Nombre *</label>
+                        <input id="t-nombre" name="nombre" type="text" placeholder="Tu nombre" required
+                               class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoVerde focus:bg-noche outline-none transition-all text-white placeholder-textoSecundario/40">
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <label for="t-tel" class="text-xs font-bold text-textoSecundario uppercase tracking-wider">Teléfono</label>
+                        <input id="t-tel" name="telefono" type="tel" placeholder="+52 55 0000 0000"
+                               class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoVerde focus:bg-noche outline-none transition-all text-white placeholder-textoSecundario/40">
+                    </div>
                 </div>
-                <input type="email" placeholder="Correo Electrónico" required class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoVerde focus:bg-noche outline-none transition-all text-white placeholder-textoSecundario/50">
-                <textarea rows="4" placeholder="Especificaciones del proyecto o renta..." required class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoVerde focus:bg-noche outline-none transition-all resize-none text-white placeholder-textoSecundario/50"></textarea>
-                <button type="submit" class="w-full bg-logoVerde text-white py-4.5 rounded-xl font-black uppercase text-sm tracking-widest hover:shadow-[0_0_30px_rgba(15,147,71,0.4)] hover:-translate-y-1 transition-all duration-300">
-                    Enviar a TAX-1379
+                <div class="flex flex-col gap-1.5">
+                    <label for="t-email" class="text-xs font-bold text-textoSecundario uppercase tracking-wider">Correo Electrónico *</label>
+                    <input id="t-email" name="email" type="email" placeholder="tu@empresa.com" required
+                           class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoVerde focus:bg-noche outline-none transition-all text-white placeholder-textoSecundario/40">
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <label for="t-sala" class="text-xs font-bold text-textoSecundario uppercase tracking-wider">Sala / Servicio</label>
+                    <select id="t-sala" name="sala"
+                            class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoVerde focus:bg-noche outline-none transition-all text-textoPrincipal appearance-none">
+                        <option value="" class="bg-noche">Selecciona...</option>
+                        <option value="sala-a" class="bg-noche">Sala A — Corrección de Color</option>
+                        <option value="sala-b" class="bg-noche">Sala B — Suite de Edición</option>
+                        <option value="sala-c" class="bg-noche">Sala C — Sala de Proyección</option>
+                        <option value="masterizacion" class="bg-noche">Masterización Digital</option>
+                        <option value="proyecto-completo" class="bg-noche">Proyecto Completo</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <label for="t-mensaje" class="text-xs font-bold text-textoSecundario uppercase tracking-wider">Especificaciones *</label>
+                    <textarea id="t-mensaje" name="mensaje" rows="4" placeholder="Tipo de producción, fechas, formatos requeridos..." required
+                              class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoVerde focus:bg-noche outline-none transition-all resize-none text-white placeholder-textoSecundario/40"></textarea>
+                </div>
+
+                <button type="submit" id="tax-submit-btn"
+                        class="group w-full bg-logoVerde text-white py-4 rounded-xl font-black uppercase text-sm tracking-widest hover:shadow-[0_0_35px_rgba(15,147,71,0.5)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                    <span id="tax-btn-label">Enviar a TAX-1379</span>
+                    <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                 </button>
+
+                <div id="tax-form-feedback" class="hidden text-center py-3 px-4 rounded-xl text-sm font-bold"></div>
             </form>
         </div>
     </section>
 
+    <!-- ===================== FOOTER ===================== -->
     <div id="footer-container"></div>
 
+    <!-- ===================== SCRIPTS ===================== -->
     <script>
-        // En tu proyecto real, sacarías esta constante a un archivo llamado "components.js"
-        // y lo vincularías en el <head> como: <script src="js/components.js"><\/script>
+    document.addEventListener('DOMContentLoaded', () => {
 
-        // Función que inyecta los componentes
-        function injectComponents() {
-            document.getElementById('navbar-container').innerHTML = NAVBAR_HTML;
-            document.getElementById('footer-container').innerHTML = FOOTER_HTML;
+        // 1. Inject shared components
+        if (typeof injectComponents === 'function') {
+            injectComponents();
+        }
+        if (typeof lucide !== 'undefined') lucide.createIcons();
 
-            // Re-ejecutar efecto de scroll para el navbar inyectado
-            const navbar = document.getElementById('main-navbar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('py-3', 'bg-noche/95', 'shadow-lg');
-                    navbar.classList.remove('py-5', 'bg-noche/80');
-                } else {
-                    navbar.classList.add('py-5', 'bg-noche/80');
-                    navbar.classList.remove('py-3', 'bg-noche/95', 'shadow-lg');
-                }
-            });
+        // 2. Scroll reveal
+        if (typeof initReveal === 'function') {
+            initReveal();
+        } else {
+            const obs = new IntersectionObserver((entries, o) => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); o.unobserve(e.target); } });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
         }
 
-        // Ejecutar al cargar
-        document.addEventListener('DOMContentLoaded', injectComponents);
+        // 3. TAX contact form
+        const form      = document.getElementById('tax-contact-form');
+        const feedback  = document.getElementById('tax-form-feedback');
+        const btnLabel  = document.getElementById('tax-btn-label');
+        const submitBtn = document.getElementById('tax-submit-btn');
 
-        lucide.createIcons();
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
 
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target);
+                const required = form.querySelectorAll('[required]');
+                let valid = true;
+                required.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.classList.add('border-red-500/60');
+                        valid = false;
+                    } else {
+                        field.classList.remove('border-red-500/60');
+                    }
+                });
+                if (!valid) {
+                    showFeedback('Por favor completa todos los campos requeridos.', 'error');
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                btnLabel.textContent = 'Enviando...';
+                await new Promise(r => setTimeout(r, 1400));
+
+                submitBtn.disabled = false;
+                btnLabel.textContent = 'Enviado ✓';
+                showFeedback('¡Gracias! El equipo de TAX-1379 te contactará en breve.', 'success');
+                form.reset();
+                setTimeout(() => { btnLabel.textContent = 'Enviar a TAX-1379'; }, 3000);
             });
-        }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
-        revealElements.forEach(el => revealOnScroll.observe(el));
+
+            function showFeedback(msg, type) {
+                feedback.textContent = msg;
+                feedback.className = `text-center py-3 px-4 rounded-xl text-sm font-bold ${
+                    type === 'success'
+                        ? 'bg-logoVerde/15 border border-logoVerde/30 text-logoVerde'
+                        : 'bg-red-500/15 border border-red-500/30 text-red-400'
+                }`;
+                feedback.classList.remove('hidden');
+                setTimeout(() => feedback.classList.add('hidden'), 5000);
+            }
+        }
+    });
     </script>
 </body>
 </html>

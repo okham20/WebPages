@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Audiomaster Candiani - La empresa Mexicana líder en post-producción de audio y doblaje profesional con más de 63 años de experiencia.">
-    <title>Audiomaster Candiani | Post-producción y Doblaje Profesional</title>
+    <meta name="description" content="Audiomaster Candiani — La empresa mexicana líder en postproducción de audio y doblaje profesional con más de 63 años de experiencia.">
+    <title>Audiomaster Candiani | Postproducción y Doblaje Profesional</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,38 +12,39 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/components.js" defer></script>
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        noche: '#080A0F',
-                        panel: '#10141D',
-                        logoAmarillo: '#F2E718',
-                        logoVerde: '#0F9347',
-                        logoAzulClaro: '#3E74B5',
+                        noche:          '#080A0F',
+                        panel:          '#10141D',
+                        logoAmarillo:   '#F2E718',
+                        logoVerde:      '#0F9347',
+                        logoAzulClaro:  '#3E74B5',
                         logoAzulMarino: '#222B7A',
                         textoPrincipal: '#E0E6ED',
-                        textoSecundario: '#94A3B8'
+                        textoSecundario:'#94A3B8',
                     },
                     fontFamily: {
                         montserrat: ['Montserrat', 'sans-serif'],
-                        inter:['Inter', 'sans-serif'],
+                        inter:      ['Inter',      'sans-serif'],
                     },
                     keyframes: {
-                        scroll: {
-                            '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' },
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
+                        scroll:    { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
+                        fadeInUp:  { '0%': { opacity: '0', transform: 'translateY(24px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        pulse2:    { '0%, 100%': { opacity: '0.5' }, '50%': { opacity: '1' } },
+                        shimmer:   { '0%': { backgroundPosition: '-200% center' }, '100%': { backgroundPosition: '200% center' } },
                     },
                     animation: {
-                        'infinite-scroll': 'scroll 30s linear infinite',
-                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards'
+                        'infinite-scroll': 'scroll 35s linear infinite',
+                        'fade-in-up':      'fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'fade-in-up-d1':   'fadeInUp 0.9s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both',
+                        'fade-in-up-d2':   'fadeInUp 0.9s 0.3s  cubic-bezier(0.16, 1, 0.3, 1) both',
+                        'fade-in-up-d3':   'fadeInUp 0.9s 0.45s cubic-bezier(0.16, 1, 0.3, 1) both',
+                        'shimmer':         'shimmer 3s linear infinite',
                     }
                 }
             }
@@ -51,393 +52,720 @@
     </script>
 
     <style>
+        /* ---- Scrollbar ---- */
+        ::-webkit-scrollbar            { width: 4px; }
+        ::-webkit-scrollbar-track      { background: #080A0F; }
+        ::-webkit-scrollbar-thumb      { background: #0F9347; border-radius: 2px; }
+
+        /* ---- Parallax ---- */
+        .parallax { background-attachment: fixed; background-position: center; background-size: cover; }
+        @media (max-width: 768px) { .parallax { background-attachment: scroll; } }
+
+        /* ---- Hero gradient ---- */
+        .hero-gradient { background: linear-gradient(to bottom, rgba(8,10,15,0.65) 0%, rgba(34,43,122,0.25) 50%, rgba(8,10,15,1) 100%); }
+
+        /* ---- Reveal animation ---- */
+        .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.75s cubic-bezier(0.5,0,0,1), transform 0.75s cubic-bezier(0.5,0,0,1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ---- Staggered reveal delays ---- */
+        .delay-100 { transition-delay: 0.10s; }
+        .delay-200 { transition-delay: 0.20s; }
+        .delay-300 { transition-delay: 0.30s; }
+        .delay-400 { transition-delay: 0.40s; }
+        .delay-500 { transition-delay: 0.50s; }
+
+        /* ---- Gradient text shimmer ---- */
+        .shimmer-text {
+            background: linear-gradient(90deg, #F2E718, #0F9347, #3E74B5, #F2E718);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+
+        /* ---- Noise texture overlay ---- */
+        .noise::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* ---- Service card glow ---- */
+        .service-card { transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease; }
+        .service-card:hover { transform: translateY(-6px); }
+
+        /* ---- Stat counter ---- */
+        .stat-number { font-variant-numeric: tabular-nums; }
+
+        /* ---- Waveform bars ---- */
+        .wave-bar { animation: wave 1.2s ease-in-out infinite; transform-origin: bottom; }
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.4); }
+            50%       { transform: scaleY(1); }
+        }
+
+        /* ---- Active nav indicator ---- */
+        .nav-link { position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: currentColor; border-radius: 2px; transition: width 0.3s ease; }
+        .nav-link:hover::after { width: 100%; }
+
+        /* ---- No scrollbar for ticker ---- */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Efecto Parallax sutil */
-        .parallax {
-            background-attachment: fixed;
-            background-position: center;
-            background-size: cover;
-        }
-
-        .hero-gradient {
-            background: linear-gradient(to bottom, rgba(8,10,15,0.7), rgba(34,43,122,0.3), rgba(8,10,15,1));
-        }
-
-        /* Clases para animaciones al hacer scroll */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        /* ---- Tab panel ---- */
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
     </style>
 </head>
-<body class="bg-noche text-textoPrincipal font-inter antialiased selection:bg-logoAmarillo selection:text-noche">
+<body class="bg-noche text-textoPrincipal font-inter antialiased selection:bg-logoAmarillo selection:text-noche overflow-x-hidden">
 
-    <header id="navbar" class="flex justify-between items-center px-6 py-5 bg-noche/80 backdrop-blur-md fixed top-0 w-full z-50 border-b border-white/5 transition-all duration-300">
-        <div class="flex items-center gap-3 z-50">
-            <div class="flex flex-col gap-0.5">
-                <div class="flex gap-0.5 h-1.5 w-8">
-                    <div class="flex-1 bg-logoAmarillo rounded-l-full"></div>
-                    <div class="flex-1 bg-logoVerde"></div>
-                    <div class="flex-1 bg-logoAzulClaro rounded-r-full"></div>
-                </div>
-                <a href="#" class="font-montserrat text-xl tracking-tighter font-black">
-                    <span class="text-white">AUDIOMASTER</span>
-                    <span class="text-textoSecundario font-light">CANDIANI</span>
-                </a>
-            </div>
-        </div>
-        <nav class="hidden md:flex items-center gap-8 text-[10px] font-bold uppercase tracking-widest">
-            <a href="#inicio" class="text-textoPrincipal hover:text-logoAmarillo transition-colors">Inicio</a>
-            <a href="#nosotros" class="text-textoPrincipal hover:text-logoAzulClaro transition-colors">Nosotros</a>
-            <a href="#servicios" class="text-textoPrincipal hover:text-logoVerde transition-colors">Servicios</a>
-            <a href="#instalaciones" class="text-textoPrincipal hover:text-logoAzulMarino transition-colors">Instalaciones</a>
-            <a href="tax1379.html" class="text-textoPrincipal hover:text-logoAmarillo transition-colors">TAX-1379</a>
-            <a href="#contacto" class="bg-logoAmarillo text-noche px-6 py-2.5 rounded-full hover:scale-105 hover:shadow-[0_0_15px_rgba(242,231,24,0.4)] transition-all">Contacto</a>
-        </nav>
-        <button id="mobile-menu-btn" class="md:hidden text-white z-50 hover:text-logoAmarillo transition-colors">
-            <i data-lucide="menu"></i>
-        </button>
+    <!-- ===================== NAVBAR ===================== -->
+    <div id="navbar-container"></div>
 
-        <div id="mobile-menu" class="fixed inset-0 bg-noche/98 backdrop-blur-xl flex flex-col items-center justify-center opacity-0 pointer-events-none transition-all duration-300">
-            <a href="#inicio" class="mobile-link text-2xl mb-6 font-montserrat font-black hover:text-logoAmarillo transition-colors">Inicio</a>
-            <a href="#nosotros" class="mobile-link text-2xl mb-6 font-montserrat font-black hover:text-logoAzulClaro transition-colors">Nosotros</a>
-            <a href="#servicios" class="mobile-link text-2xl mb-6 font-montserrat font-black hover:text-logoVerde transition-colors">Servicios</a>
-            <a href="#instalaciones" class="mobile-link text-2xl mb-6 font-montserrat font-black hover:text-logoAzulClaro transition-colors">Instalaciones</a>
-            <a href="#inicio" class="mobile-link text-2xl mb-6 font-montserrat font-black hover:text-logoAmarillo transition-colors">TAX-1379</a>
-            <a href="#contacto" class="mobile-link text-2xl mb-8 font-montserrat font-black text-logoAmarillo">Contacto</a>
-        </div>
-    </header>
-
-    <section id="inicio" class="parallax relative h-screen flex items-center justify-center overflow-hidden" style="background-image: url('https://www.audiomaster.com.mx/img/CandianiStudio.jpg');">
+    <!-- ===================== HERO ===================== -->
+    <section id="inicio" class="parallax relative h-screen min-h-[640px] flex items-center justify-center overflow-hidden noise"
+             style="background-image: url('https://www.audiomaster.com.mx/img/CandianiStudio.jpg');">
         <div class="absolute inset-0 hero-gradient"></div>
 
-        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto mt-16 animate-fade-in-up">
-            <div class="inline-block mb-8 px-5 py-1.5 rounded-full border border-logoAmarillo/30 bg-logoAmarillo/10 text-logoAmarillo text-[12px] font-bold uppercase tracking-[0.3em] backdrop-blur-sm">
-                63 Años de Excelencia
+        <!-- Animated waveform decoration -->
+        <div class="absolute bottom-24 left-1/2 -translate-x-1/2 flex items-end gap-1 opacity-20 pointer-events-none" aria-hidden="true">
+            <script>
+                document.write([...Array(18)].map((_,i) => {
+                    const h = [12,20,32,48,40,56,64,48,36,52,60,44,36,28,48,38,24,16][i];
+                    const d = (i * 0.09).toFixed(2);
+                    return `<div class="wave-bar w-1 bg-logoAmarillo rounded-full" style="height:${h}px;animation-delay:${d}s"></div>`;
+                }).join(''));
+            </script>
+        </div>
+
+        <div class="relative z-10 text-center px-5 max-w-5xl mx-auto mt-20">
+            <div class="animate-fade-in-up inline-flex items-center gap-2 mb-8 px-5 py-1.5 rounded-full border border-logoAmarillo/30 bg-logoAmarillo/10 text-logoAmarillo text-[11px] font-bold uppercase tracking-[0.35em] backdrop-blur-sm shadow-[0_0_20px_rgba(242,231,24,0.15)]">
+                <i data-lucide="award" class="w-3.5 h-3.5"></i>
+                63 Años de Excelencia en México
             </div>
 
-            <img src="https://audiomaster.com.mx/img/AudioMasterCandiani_iso.png" alt="Audiomaster Candiani Logo" class="w-auto h-20 md:h-28 mx-auto mb-8 drop-shadow-2xl hover:scale-105 transition-transform duration-500">
+            <img src="https://audiomaster.com.mx/img/AudioMasterCandiani_iso.png"
+                 alt="Audiomaster Candiani"
+                 class="animate-fade-in-up-d1 w-auto h-20 md:h-28 mx-auto mb-8 drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                 loading="eager">
 
-            <h1 class="font-montserrat text-5xl md:text-8xl text-white tracking-tighter font-black mb-6 drop-shadow-2xl">
-                AUDIOMASTER <br class="md:hidden"> <span class="text-transparent bg-clip-text bg-gradient-to-r from-logoAmarillo via-logoVerde to-logoAzulClaro">CANDIANI</span>
+            <h1 class="animate-fade-in-up-d2 font-montserrat text-5xl sm:text-7xl md:text-9xl text-white tracking-tighter font-black mb-6 drop-shadow-2xl">
+                AUDIOMASTER<br>
+                <span class="shimmer-text">CANDIANI</span>
             </h1>
-            <h2 class="text-lg md:text-2xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed mb-10">
-                La empresa Mexicana líder en doblaje y post-producción.
-            </h2>
-            <div class="flex flex-col md:flex-row gap-5 justify-center">
-                <a href="#contacto" class="bg-logoAmarillo text-noche px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(242,231,24,0.4)] hover:-translate-y-1 transition-all duration-300">
+
+            <p class="animate-fade-in-up-d3 text-lg md:text-2xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed mb-10">
+                La empresa mexicana líder en <strong class="font-medium text-white">doblaje y postproducción de audio</strong> para cine y televisión.
+            </p>
+
+            <div class="animate-fade-in-up-d3 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#contacto"
+                   class="group bg-logoAmarillo text-noche px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest hover:shadow-[0_0_35px_rgba(242,231,24,0.5)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
                     Iniciar Proyecto
+                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                 </a>
-                <a href="#servicios" class="bg-white/5 border border-white/10 backdrop-blur-md text-white px-10 py-4 rounded-full font-bold text-sm uppercase tracking-widest hover:bg-white/10 hover:-translate-y-1 transition-all duration-300">
+                <a href="#servicios"
+                   class="bg-white/5 border border-white/15 backdrop-blur-md text-white px-10 py-4 rounded-full font-bold text-sm uppercase tracking-widest hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                    <i data-lucide="play-circle" class="w-4 h-4"></i>
                     Nuestros Servicios
                 </a>
             </div>
         </div>
-    </section>
 
-    <section id="nosotros" class="py-24 bg-panel border-y border-white/5 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-96 h-96 bg-logoVerde/5 rounded-full blur-3xl -z-10"></div>
-        <div class="max-w-4xl mx-auto px-6 text-center reveal">
-            <h3 class="font-montserrat text-logoVerde text-sm md:text-base font-black uppercase tracking-[0.4em] mb-6">Acerca de Nosotros</h3>
-            <p class="text-xl md:text-3xl font-inter font-light text-textoPrincipal leading-relaxed mb-10">
-                Audiomaster Candiani cuenta con más de <span class="text-white font-bold">sesenta y tres años de experiencia</span> haciendo doblaje para los productores y distribuidores internacionales más importantes de la industria del entretenimiento.
-            </p>
-            <div class="w-24 h-px bg-white/20 mx-auto mb-10"></div>
-            <p class="text-xl md:text-2xl font-inter italic font-extralight text-textoSecundario leading-relaxed">
-                "La atención de la audiencia no debe ser desviada, <br class="hidden md:block">
-                <span class="text-logoAmarillo font-medium">el doblaje debe pasar desapercibido.</span>"
-            </p>
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50" aria-hidden="true">
+            <span class="text-[9px] uppercase tracking-[0.4em] text-textoSecundario">Scroll</span>
+            <div class="w-px h-10 bg-gradient-to-b from-logoAmarillo to-transparent"></div>
         </div>
     </section>
 
-    <section id="servicios" class="py-32 px-6 max-w-7xl mx-auto">
-        <div class="mb-20 text-center reveal">
-            <h2 class="font-montserrat text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter">SOLUCIONES</h2>
-            <div class="flex justify-center gap-1.5">
-                <div class="w-10 h-1.5 bg-logoAmarillo rounded-full"></div>
-                <div class="w-10 h-1.5 bg-logoVerde rounded-full"></div>
-                <div class="w-10 h-1.5 bg-logoAzulClaro rounded-full"></div>
+    <!-- ===================== STATS ===================== -->
+    <section class="py-20 px-6 border-y border-white/5 bg-panel/50" aria-label="Estadísticas">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 text-center">
+            <div class="reveal flex flex-col items-center gap-1">
+                <span class="stat-number font-montserrat font-black text-5xl md:text-6xl text-logoAmarillo" data-counter="63" data-suffix="+">0+</span>
+                <span class="text-xs uppercase tracking-[0.2em] text-textoSecundario font-bold">Años de Trayectoria</span>
             </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-            <div class="reveal group p-10 bg-panel rounded-[2.5rem] border border-white/5 hover:border-logoAzulClaro/50 hover:shadow-[0_10px_40px_-10px_rgba(62,116,181,0.2)] transition-all duration-500 relative h-auto">
-                <div class="mb-8 text-logoAzulClaro group-hover:scale-110 transition-transform duration-500 origin-left">
-                    <i data-lucide="mic" class="w-12 h-12"></i>
-                </div>
-                <h3 class="font-montserrat text-2xl font-black mb-6 text-white uppercase tracking-tighter">Doblaje y Audio</h3>
-
-                <ul class="space-y-6 text-textoSecundario text-sm font-light">
-                    <li class="space-y-3">
-                        <div class="flex items-center gap-3 text-white font-medium">
-                            <span class="w-2 h-2 bg-logoAzulClaro rounded-full shadow-[0_0_10px_rgba(62,116,181,0.8)]"></span>
-                            Delivery Packages
-                        </div>
-                        <ul class="pl-7 space-y-2 border-l border-white/10 ml-[3px]">
-                            <li class="flex items-center gap-3"><span class="w-1 h-1 bg-logoAzulClaro/60 rounded-full"></span> IMF/DCP Packaging</li>
-                            <li class="flex items-center gap-3"><span class="w-1 h-1 bg-logoAzulClaro/60 rounded-full"></span> Secure File Transfer Server</li>
-                            <li class="flex items-center gap-3"><span class="w-1 h-1 bg-logoAzulClaro/60 rounded-full"></span> Transcoding & Platforms Compliance</li>
-                        </ul>
-                    </li>
-
-                    <li class="space-y-3">
-                        <div class="flex items-center gap-3 text-white font-medium">
-                            <span class="w-2 h-2 bg-logoAzulClaro rounded-full shadow-[0_0_10px_rgba(62,116,181,0.8)]"></span>
-                            Sound Mastering
-                        </div>
-                        <ul class="pl-7 space-y-2 border-l border-white/10 ml-[3px]">
-                            <li class="flex items-center gap-3"><span class="w-1 h-1 bg-logoAzulClaro/60 rounded-full"></span> ADR</li>
-                            <li class="flex items-center gap-3"><span class="w-1 h-1 bg-logoAzulClaro/60 rounded-full"></span> Mixing 5.1, 7.1 & Atmos Conform</li>
-                            <li class="flex items-center gap-3"><span class="w-1 h-1 bg-logoAzulClaro/60 rounded-full"></span> M&E Creation</li>
-                        </ul>
-                    </li>
-
-                    <li class="space-y-3">
-                        <div class="flex items-center gap-3 text-white font-medium">
-                            <span class="w-2 h-2 bg-logoAzulClaro rounded-full shadow-[0_0_10px_rgba(62,116,181,0.8)]"></span>
-                            Dubbing & Subtitling
-                        </div>
-                        <ul class="pl-7 space-y-2 border-l border-white/10 ml-[3px]">
-                            <li class="flex items-center gap-3"><span class="w-1 h-1 bg-logoAzulClaro/60 rounded-full"></span> LatAm Spanish, English & BR Portuguese</li>
-                            <li class="flex items-center gap-3"><span class="w-1 h-1 bg-logoAzulClaro/60 rounded-full"></span> Remote Recording / ISDN</li>
-                            <li class="flex items-center gap-3"><span class="w-1 h-1 bg-logoAzulClaro/60 rounded-full"></span> CC/SDH & Audio Description</li>
-                        </ul>
-                    </li>
-                </ul>
+            <div class="reveal delay-100 flex flex-col items-center gap-1">
+                <span class="stat-number font-montserrat font-black text-5xl md:text-6xl text-logoVerde" data-counter="2000" data-suffix="+">0+</span>
+                <span class="text-xs uppercase tracking-[0.2em] text-textoSecundario font-bold">Títulos Doblados</span>
             </div>
-
-            <div class="reveal delay-100 group p-10 bg-panel rounded-[2.5rem] border border-white/5 hover:border-logoVerde/50 hover:shadow-[0_10px_40px_-10px_rgba(15,147,71,0.2)] transition-all duration-500 relative h-auto">
-                <div class="mb-8 text-logoVerde group-hover:scale-110 transition-transform duration-500 origin-left">
-                    <i data-lucide="shield-check" class="w-12 h-12"></i>
-                </div>
-                <h3 class="font-montserrat text-2xl font-black mb-6 text-white uppercase tracking-tighter">Quality Control</h3>
-
-                <p class="text-sm font-light text-textoSecundario leading-relaxed mb-6">
-                    Laboratorio certificado que cumple con los más altos estándares de calidad y eficiencia exigidos por plataformas digitales globales.
-                </p>
-
-                <ul class="space-y-4 text-textoSecundario text-sm font-light">
-                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-logoVerde rounded-full shadow-[0_0_8px_rgba(15,147,71,0.8)]"></span> 4K & UHD Media Analysis</li>
-                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-logoVerde rounded-full shadow-[0_0_8px_rgba(15,147,71,0.8)]"></span> HDR Dolby Vision Mastering</li>
-                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-logoVerde rounded-full shadow-[0_0_8px_rgba(15,147,71,0.8)]"></span> Digital Cinema QC</li>
-                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-logoVerde rounded-full shadow-[0_0_8px_rgba(15,147,71,0.8)]"></span> Automated File-Based QC</li>
-                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-logoVerde rounded-full shadow-[0_0_8px_rgba(15,147,71,0.8)]"></span> M&E QC</li>
-                </ul>
+            <div class="reveal delay-200 flex flex-col items-center gap-1">
+                <span class="stat-number font-montserrat font-black text-5xl md:text-6xl text-logoAzulClaro" data-counter="18" data-suffix="">0</span>
+                <span class="text-xs uppercase tracking-[0.2em] text-textoSecundario font-bold">Salas Profesionales</span>
             </div>
-
-            <div class="reveal delay-200 group p-10 bg-panel rounded-[2.5rem] border border-white/5 hover:border-logoAmarillo/50 hover:shadow-[0_10px_40px_-10px_rgba(242,231,24,0.15)] transition-all duration-500 relative h-auto">
-                <div class="mb-8 text-logoAmarillo group-hover:scale-110 transition-transform duration-500 origin-left">
-                    <i data-lucide="sliders" class="w-12 h-12"></i>
-                </div>
-                <h3 class="font-montserrat text-2xl font-black mb-6 text-white uppercase tracking-tighter">Mastering</h3>
-
-                <p class="text-sm font-light text-textoSecundario leading-relaxed mb-6">
-                    Tecnología de punta para la masterización final de audio garantizando la inmersión total del espectador.
-                </p>
-
-                <ul class="space-y-4 text-textoSecundario text-sm font-light">
-                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-logoAmarillo rounded-full shadow-[0_0_8px_rgba(242,231,24,0.8)]"></span> Dolby Vision HDR</li>
-                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-logoAmarillo rounded-full shadow-[0_0_8px_rgba(242,231,24,0.8)]"></span> Mezcla Dolby Atmos Nativo</li>
-                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-logoAmarillo rounded-full shadow-[0_0_8px_rgba(242,231,24,0.8)]"></span> Delivery para OTT platforms</li>
-                </ul>
+            <div class="reveal delay-300 flex flex-col items-center gap-1">
+                <span class="stat-number font-montserrat font-black text-5xl md:text-6xl text-white" data-counter="100" data-suffix="%">0%</span>
+                <span class="text-xs uppercase tracking-[0.2em] text-textoSecundario font-bold">Compromiso de Calidad</span>
             </div>
         </div>
     </section>
 
-    <section id="instalaciones" class="parallax relative py-32 flex items-center justify-center overflow-hidden" style="background-image: linear-gradient(rgba(8,10,15,0.8), rgba(8,10,15,0.9)), url('https://www.audiomaster.com.mx/img/CandianiNosotros.jpg');">
-        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center relative z-10">
+    <!-- ===================== NOSOTROS ===================== -->
+    <section id="nosotros" class="py-32 px-6 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-16 md:gap-24 items-center">
             <div class="reveal">
-                <h2 class="font-montserrat text-5xl md:text-7xl font-black mb-6 uppercase leading-none tracking-tighter">
-                    TECNOLOGÍA <br><span class="text-logoAmarillo">+ TALENTO</span>
+                <div class="inline-flex items-center gap-2 mb-5 text-logoAmarillo text-[11px] font-bold uppercase tracking-widest">
+                    <div class="w-6 h-px bg-logoAmarillo"></div>
+                    Quiénes Somos
+                </div>
+                <h2 class="font-montserrat text-4xl md:text-5xl font-black text-white mb-8 tracking-tighter leading-none uppercase">
+                    Historia que <br><span class="text-logoAmarillo">resuena</span> en cada producción
                 </h2>
-                <p class="text-gray-400 text-lg md:text-xl font-light leading-relaxed mb-12">
-                    A lo largo de nuestra trayectoria, hemos seguido las últimas innovaciones tecnológicas para la formación del mejor equipo de trabajo.
+                <p class="text-base text-textoSecundario font-light leading-relaxed mb-5">
+                    Fundada hace más de seis décadas, Audiomaster Candiani es la institución de referencia en doblaje y postproducción de audio en México y América Latina, con créditos en las producciones más importantes del cine y la televisión global.
                 </p>
-                <div class="grid grid-cols-2 gap-8">
-                    <div class="p-6 bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
-                        <span class="font-montserrat text-5xl md:text-6xl font-black text-white tracking-tighter">18</span>
-                        <p class="text-logoAzulClaro text-xs md:text-sm font-bold uppercase tracking-widest mt-2 mb-3">Salas de Grabación</p>
-                        <p class="text-gray-500 text-xs font-light leading-relaxed">
-                            Acústica de precisión diseñada para captura de voz cristalina.
-                        </p>
+                <p class="text-base text-textoSecundario font-light leading-relaxed mb-10">
+                    Nuestros estudios albergan tecnología de vanguardia operada por talentos con décadas de experiencia, garantizando que cada proyecto supere los estándares internacionales más exigentes.
+                </p>
+
+                <!-- Feature pills -->
+                <div class="flex flex-wrap gap-3">
+                    <span class="px-4 py-2 rounded-full bg-logoAmarillo/10 border border-logoAmarillo/20 text-logoAmarillo text-xs font-bold uppercase tracking-wider">Dolby Atmos</span>
+                    <span class="px-4 py-2 rounded-full bg-logoVerde/10 border border-logoVerde/20 text-logoVerde text-xs font-bold uppercase tracking-wider">IMAX</span>
+                    <span class="px-4 py-2 rounded-full bg-logoAzulClaro/10 border border-logoAzulClaro/20 text-logoAzulClaro text-xs font-bold uppercase tracking-wider">Netflix Approved</span>
+                    <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white text-xs font-bold uppercase tracking-wider">ISO Certified</span>
+                </div>
+            </div>
+
+            <!-- Image collage -->
+            <div class="reveal delay-200 relative">
+                <div class="relative overflow-hidden rounded-3xl aspect-square shadow-2xl">
+                    <img src="https://www.audiomaster.com.mx/img/CandianiStudio.jpg"
+                         alt="Estudios Audiomaster Candiani"
+                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                         loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-noche/60 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6 p-4 bg-noche/80 backdrop-blur-md rounded-2xl border border-white/10">
+                        <p class="text-xs text-textoSecundario uppercase tracking-wider mb-1">Sede principal</p>
+                        <p class="text-sm font-bold text-white">Sevilla 618, Col. Portales, CDMX</p>
                     </div>
-                    <div class="p-6 bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
-                        <span class="font-montserrat text-5xl md:text-6xl font-black text-white tracking-tighter">9</span>
-                        <p class="text-logoVerde text-xs md:text-sm font-bold uppercase tracking-widest mt-2 mb-3">Salas de Mezcla</p>
-                        <p class="text-gray-500 text-xs font-light leading-relaxed">
-                            Soporte completo para formatos 2.0, 5.1, 7.1 y Dolby Atmos.
-                        </p>
+                </div>
+                <!-- Floating accent card -->
+                <div class="absolute -bottom-6 -right-6 p-5 bg-panel border border-white/10 rounded-2xl shadow-2xl backdrop-blur-md hidden md:block">
+                    <p class="text-4xl font-montserrat font-black text-logoAmarillo leading-none">63</p>
+                    <p class="text-xs text-textoSecundario uppercase tracking-wider mt-1">Años de historia</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== SERVICIOS (tabbed) ===================== -->
+    <section id="servicios" class="py-32 bg-panel/40 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-flex items-center gap-2 mb-5 text-logoVerde text-[11px] font-bold uppercase tracking-widest">
+                    <div class="w-6 h-px bg-logoVerde"></div>
+                    Lo que hacemos
+                    <div class="w-6 h-px bg-logoVerde"></div>
+                </div>
+                <h2 class="font-montserrat text-4xl md:text-6xl font-black text-white tracking-tighter uppercase mb-4">
+                    Servicios <span class="text-logoVerde">de Élite</span>
+                </h2>
+                <p class="text-textoSecundario max-w-xl mx-auto text-base font-light">
+                    Un ecosistema completo para cada etapa de tu producción audiovisual.
+                </p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="reveal flex flex-wrap justify-center gap-2 mb-12" role="tablist" aria-label="Categorías de servicios">
+                <button role="tab" aria-selected="true" aria-controls="tab-doblaje"
+                        class="tab-btn active-tab px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 bg-logoAmarillo text-noche"
+                        data-tab="doblaje">
+                    Doblaje
+                </button>
+                <button role="tab" aria-selected="false" aria-controls="tab-audio"
+                        class="tab-btn px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 bg-white/5 border border-white/10 text-textoSecundario hover:text-white hover:border-white/30"
+                        data-tab="audio">
+                    Postproducción Audio
+                </button>
+                <button role="tab" aria-selected="false" aria-controls="tab-mezcla"
+                        class="tab-btn px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 bg-white/5 border border-white/10 text-textoSecundario hover:text-white hover:border-white/30"
+                        data-tab="mezcla">
+                    Mezcla Final
+                </button>
+                <button role="tab" aria-selected="false" aria-controls="tab-localizacion"
+                        class="tab-btn px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 bg-white/5 border border-white/10 text-textoSecundario hover:text-white hover:border-white/30"
+                        data-tab="localizacion">
+                    Localización
+                </button>
+            </div>
+
+            <!-- Tab panels -->
+            <div id="tab-doblaje" class="tab-panel active" role="tabpanel">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="reveal service-card group p-8 bg-noche rounded-3xl border border-white/5 hover:border-logoAmarillo/50 hover:shadow-[0_12px_40px_-10px_rgba(242,231,24,0.2)]">
+                        <div class="w-12 h-12 rounded-2xl bg-logoAmarillo/10 flex items-center justify-center text-logoAmarillo mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="mic-2" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-3">Doblaje Cinematográfico</h3>
+                        <p class="text-sm text-textoSecundario font-light leading-relaxed">Doblaje de largo y cortometrajes para distribución en plataformas y cines de toda América Latina.</p>
+                    </div>
+                    <div class="reveal delay-100 service-card group p-8 bg-noche rounded-3xl border border-white/5 hover:border-logoAmarillo/50 hover:shadow-[0_12px_40px_-10px_rgba(242,231,24,0.2)]">
+                        <div class="w-12 h-12 rounded-2xl bg-logoAmarillo/10 flex items-center justify-center text-logoAmarillo mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="tv-2" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-3">Doblaje para Televisión</h3>
+                        <p class="text-sm text-textoSecundario font-light leading-relaxed">Series, telenovelas y documentales. Estándares broadcast para cadenas nacionales e internacionales.</p>
+                    </div>
+                    <div class="reveal delay-200 service-card group p-8 bg-noche rounded-3xl border border-white/5 hover:border-logoAmarillo/50 hover:shadow-[0_12px_40px_-10px_rgba(242,231,24,0.2)]">
+                        <div class="w-12 h-12 rounded-2xl bg-logoAmarillo/10 flex items-center justify-center text-logoAmarillo mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="headphones" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-3">Doblaje de Animación</h3>
+                        <p class="text-sm text-textoSecundario font-light leading-relaxed">El banco de voces más grande de México al servicio de producciones animadas de toda escala.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-panel/80 backdrop-blur-md p-10 md:p-16 rounded-[3rem] border border-white/10 relative overflow-hidden reveal delay-100 shadow-2xl">
-                <div class="absolute left-0 top-0 w-20 h-full bg-gradient-to-r from-panel to-transparent z-10"></div>
-                <div class="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-panel to-transparent z-10"></div>
+            <div id="tab-audio" class="tab-panel" role="tabpanel">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="reveal service-card group p-8 bg-noche rounded-3xl border border-white/5 hover:border-logoVerde/50 hover:shadow-[0_12px_40px_-10px_rgba(15,147,71,0.2)]">
+                        <div class="w-12 h-12 rounded-2xl bg-logoVerde/10 flex items-center justify-center text-logoVerde mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="sliders-horizontal" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-3">Edición y Diseño Sonoro</h3>
+                        <p class="text-sm text-textoSecundario font-light leading-relaxed">Edición de diálogos, ADR, efectos de sonido y ambientes desde nuestra biblioteca de más de 500k efectos.</p>
+                    </div>
+                    <div class="reveal delay-100 service-card group p-8 bg-noche rounded-3xl border border-white/5 hover:border-logoVerde/50 hover:shadow-[0_12px_40px_-10px_rgba(15,147,71,0.2)]">
+                        <div class="w-12 h-12 rounded-2xl bg-logoVerde/10 flex items-center justify-center text-logoVerde mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="music-2" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-3">Composición Musical</h3>
+                        <p class="text-sm text-textoSecundario font-light leading-relaxed">Bandas sonoras originales y adaptaciones musicales para cualquier género de producción audiovisual.</p>
+                    </div>
+                    <div class="reveal delay-200 service-card group p-8 bg-noche rounded-3xl border border-white/5 hover:border-logoVerde/50 hover:shadow-[0_12px_40px_-10px_rgba(15,147,71,0.2)]">
+                        <div class="w-12 h-12 rounded-2xl bg-logoVerde/10 flex items-center justify-center text-logoVerde mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="podcast" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-3">Grabación de Locución</h3>
+                        <p class="text-sm text-textoSecundario font-light leading-relaxed">Cabinas aisladas, monitoreo calibrado y talento seleccionado para spots, publicidad y contenido corporativo.</p>
+                    </div>
+                </div>
+            </div>
 
-                <h3 class="text-center font-montserrat text-sm text-textoSecundario font-bold uppercase tracking-[0.3em] mb-12">Partners Tecnológicos</h3>
+            <div id="tab-mezcla" class="tab-panel" role="tabpanel">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="reveal service-card group p-8 bg-noche rounded-3xl border border-white/5 hover:border-logoAzulClaro/50 hover:shadow-[0_12px_40px_-10px_rgba(62,116,181,0.2)]">
+                        <div class="w-12 h-12 rounded-2xl bg-logoAzulClaro/10 flex items-center justify-center text-logoAzulClaro mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="radio" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-3">Mezcla Dolby Atmos</h3>
+                        <p class="text-sm text-textoSecundario font-light leading-relaxed">Sala de mezcla certificada Dolby Atmos para cine y OTT. Audio inmersivo de referencia mundial.</p>
+                    </div>
+                    <div class="reveal delay-100 service-card group p-8 bg-noche rounded-3xl border border-white/5 hover:border-logoAzulClaro/50 hover:shadow-[0_12px_40px_-10px_rgba(62,116,181,0.2)]">
+                        <div class="w-12 h-12 rounded-2xl bg-logoAzulClaro/10 flex items-center justify-center text-logoAzulClaro mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="waveform" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-3">Mezcla Stereo y 5.1</h3>
+                        <p class="text-sm text-textoSecundario font-light leading-relaxed">Mezclas tradicionales optimizadas para televisión, streaming y distribución física en cualquier formato.</p>
+                    </div>
+                    <div class="reveal delay-200 service-card group p-8 bg-noche rounded-3xl border border-white/5 hover:border-logoAzulClaro/50 hover:shadow-[0_12px_40px_-10px_rgba(62,116,181,0.2)]">
+                        <div class="w-12 h-12 rounded-2xl bg-logoAzulClaro/10 flex items-center justify-center text-logoAzulClaro mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-3">QC de Audio</h3>
+                        <p class="text-sm text-textoSecundario font-light leading-relaxed">Control de calidad técnico siguiendo los estándares de Netflix, Amazon Prime y demás plataformas VOD.</p>
+                    </div>
+                </div>
+            </div>
 
-                <div class="overflow-hidden whitespace-nowrap flex w-full">
-                    <div class="animate-infinite-scroll flex gap-12 items-center w-max">
-                        <span class="font-montserrat text-3xl font-black text-white/30 hover:text-logoAmarillo transition-all px-4 cursor-default">DOLBY</span>
-                        <span class="font-inter text-3xl font-bold italic text-white/30 hover:text-logoAzulClaro transition-all px-4 cursor-default">AVID</span>
-                        <span class="font-montserrat text-3xl font-black text-white/30 hover:text-logoVerde transition-all px-4 cursor-default">SSL</span>
-                        <span class="font-inter text-3xl font-medium text-white/30 hover:text-white transition-all px-4 cursor-default">APPLE</span>
-                        <span class="font-montserrat text-3xl font-black text-white/30 hover:text-logoAmarillo transition-all px-4 cursor-default">DYNAUDIO</span>
-                        <span class="font-inter text-3xl font-bold italic text-white/30 hover:text-logoAzulClaro transition-all px-4 cursor-default">NEUMANN</span>
-                        <span class="font-montserrat text-3xl font-black text-white/30 hover:text-logoVerde transition-all px-4 cursor-default">SONNET</span>
-                        <span class="font-montserrat text-3xl font-black text-white/30 hover:text-logoAmarillo transition-all px-4 cursor-default">DOLBY</span>
-                        <span class="font-inter text-3xl font-bold italic text-white/30 hover:text-logoAzulClaro transition-all px-4 cursor-default">AVID</span>
-                        <span class="font-montserrat text-3xl font-black text-white/30 hover:text-logoVerde transition-all px-4 cursor-default">SSL</span>
-                        <span class="font-inter text-3xl font-medium text-white/30 hover:text-white transition-all px-4 cursor-default">APPLE</span>
-                        <span class="font-montserrat text-3xl font-black text-white/30 hover:text-logoAmarillo transition-all px-4 cursor-default">DYNAUDIO</span>
-                        <span class="font-inter text-3xl font-bold italic text-white/30 hover:text-logoAzulClaro transition-all px-4 cursor-default">NEUMANN</span>
-                        <span class="font-montserrat text-3xl font-black text-white/30 hover:text-logoVerde transition-all px-4 cursor-default">SONNET</span>
+            <div id="tab-localizacion" class="tab-panel" role="tabpanel">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="reveal service-card group p-8 bg-noche rounded-3xl border border-white/5 hover:border-white/30 hover:shadow-[0_12px_40px_-10px_rgba(255,255,255,0.1)]">
+                        <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="subtitles" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-3">Subtitulaje</h3>
+                        <p class="text-sm text-textoSecundario font-light leading-relaxed">Adaptación y sincronización de subtítulos en español, inglés y más de 20 idiomas adicionales.</p>
+                    </div>
+                    <div class="reveal delay-100 service-card group p-8 bg-noche rounded-3xl border border-white/5 hover:border-white/30 hover:shadow-[0_12px_40px_-10px_rgba(255,255,255,0.1)]">
+                        <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="languages" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-3">Traducción y Adaptación</h3>
+                        <p class="text-sm text-textoSecundario font-light leading-relaxed">Guiones adaptados culturalmente por traductores especializados en contenido audiovisual.</p>
+                    </div>
+                    <div class="reveal delay-200 service-card group p-8 bg-noche rounded-3xl border border-white/5 hover:border-white/30 hover:shadow-[0_12px_40px_-10px_rgba(255,255,255,0.1)]">
+                        <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="closed-captions" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-montserrat text-lg font-black text-white mb-3">Audiodescripción</h3>
+                        <p class="text-sm text-textoSecundario font-light leading-relaxed">Servicios de accesibilidad audiovisual cumpliendo con las normativas internacionales de inclusión.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ===================== TAX-1379 CTA ===================== -->
+    <section class="py-32 px-6 max-w-7xl mx-auto">
+        <div class="reveal relative overflow-hidden rounded-[3rem] p-10 md:p-20 bg-panel border border-white/5 shadow-2xl">
+            <!-- Background decoration -->
+            <div class="absolute inset-0 bg-gradient-to-br from-logoVerde/10 via-transparent to-logoAzulClaro/10 pointer-events-none"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-logoVerde/5 blur-[120px] pointer-events-none"></div>
+
+            <div class="relative grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 mb-5 text-logoVerde text-[11px] font-bold uppercase tracking-widest">
+                        <i data-lucide="clapperboard" class="w-3.5 h-3.5"></i>
+                        División de Cine y TV
+                    </div>
+                    <h2 class="font-montserrat text-4xl md:text-6xl font-black text-white tracking-tighter uppercase mb-6 leading-none">
+                        TAX<span class="text-transparent bg-clip-text bg-gradient-to-r from-logoVerde to-logoAzulClaro">-1379</span>
+                    </h2>
+                    <p class="text-textoSecundario font-light leading-relaxed mb-8 text-base">
+                        Nuestro centro de postproducción visual de clase mundial. Corrección de color, masterización digital y salas de edición equipadas con la más alta tecnología. Único en su clase en México y América Latina.
+                    </p>
+                    <a href="tax1379.html"
+                       class="group inline-flex items-center gap-3 bg-logoVerde text-white px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest hover:shadow-[0_0_35px_rgba(15,147,71,0.5)] hover:-translate-y-1 transition-all duration-300">
+                        Conocer TAX-1379
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-6 rounded-2xl bg-noche/60 border border-logoVerde/20 hover:border-logoVerde/50 transition-colors">
+                        <i data-lucide="aperture" class="w-6 h-6 text-logoVerde mb-3"></i>
+                        <p class="font-montserrat font-black text-sm text-white">Corrección de Color</p>
+                        <p class="text-xs text-textoSecundario mt-1">HDR · Dolby Vision</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-noche/60 border border-logoAzulClaro/20 hover:border-logoAzulClaro/50 transition-colors">
+                        <i data-lucide="layers" class="w-6 h-6 text-logoAzulClaro mb-3"></i>
+                        <p class="font-montserrat font-black text-sm text-white">Masterización</p>
+                        <p class="text-xs text-textoSecundario mt-1">DCP · VOD · UHD</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-noche/60 border border-white/10 hover:border-white/30 transition-colors">
+                        <i data-lucide="monitor-play" class="w-6 h-6 text-white mb-3"></i>
+                        <p class="font-montserrat font-black text-sm text-white">Salas de Edición</p>
+                        <p class="text-xs text-textoSecundario mt-1">Privadas · 24/7</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-noche/60 border border-logoAmarillo/20 hover:border-logoAmarillo/50 transition-colors">
+                        <i data-lucide="projector" class="w-6 h-6 text-logoAmarillo mb-3"></i>
+                        <p class="font-montserrat font-black text-sm text-white">Sala de Proyección</p>
+                        <p class="text-xs text-textoSecundario mt-1">4K · Laser</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== INSTALACIONES ===================== -->
+    <section id="instalaciones" class="py-32 bg-panel/40 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-flex items-center gap-2 mb-5 text-logoAzulClaro text-[11px] font-bold uppercase tracking-widest">
+                    <div class="w-6 h-px bg-logoAzulClaro"></div>
+                    Instalaciones
+                    <div class="w-6 h-px bg-logoAzulClaro"></div>
+                </div>
+                <h2 class="font-montserrat text-4xl md:text-6xl font-black text-white tracking-tighter uppercase">
+                    Donde la <span class="text-logoAzulClaro">Magia</span> Sucede
+                </h2>
+            </div>
+
+            <!-- Instalaciones grid -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="reveal group relative overflow-hidden rounded-3xl aspect-[3/4] md:row-span-2 md:aspect-auto">
+                    <img src="https://www.audiomaster.com.mx/img/CandianiStudio.jpg"
+                         alt="Sala de Grabación Principal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-noche via-noche/20 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6">
+                        <span class="text-[10px] text-logoAmarillo font-bold uppercase tracking-widest">Sala Principal</span>
+                        <p class="font-montserrat font-black text-xl text-white mt-1">Grabación y Doblaje</p>
+                        <p class="text-sm text-textoSecundario mt-1">1,200 m² de instalaciones certificadas</p>
+                    </div>
+                </div>
+                <div class="reveal delay-100 group relative overflow-hidden rounded-3xl aspect-video">
+                    <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=800"
+                         alt="Sala de Mezcla" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-noche/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-5">
+                        <span class="text-[10px] text-logoVerde font-bold uppercase tracking-widest">Mezcla Final</span>
+                        <p class="font-montserrat font-black text-base text-white mt-0.5">Dolby Atmos Suite</p>
+                    </div>
+                </div>
+                <div class="reveal delay-200 group relative overflow-hidden rounded-3xl aspect-video">
+                    <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=800"
+                         alt="Sala de Postproducción" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-noche/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-5">
+                        <span class="text-[10px] text-logoAzulClaro font-bold uppercase tracking-widest">Postproducción</span>
+                        <p class="font-montserrat font-black text-base text-white mt-0.5">Color & VFX</p>
+                    </div>
+                </div>
+                <div class="reveal delay-300 md:col-span-2 group relative overflow-hidden rounded-3xl aspect-video">
+                    <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80&w=1200"
+                         alt="Control Room" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-noche/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-5">
+                        <span class="text-[10px] text-logoAmarillo font-bold uppercase tracking-widest">Control Room</span>
+                        <p class="font-montserrat font-black text-lg text-white mt-0.5">Cabina de Dirección y Monitoreo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== CLIENTS TICKER ===================== -->
+    <section class="py-16 border-b border-white/5" aria-label="Clientes">
+        <div class="text-center mb-10">
+            <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-textoSecundario">Confían en nosotros</p>
+        </div>
+        <div class="overflow-hidden no-scrollbar">
+            <div class="flex gap-16 items-center animate-infinite-scroll whitespace-nowrap w-max" aria-hidden="true">
+                <!-- Repeat for seamless loop -->
+                <template id="brand-list">
+                    <span class="font-montserrat text-2xl font-black text-white/25 hover:text-logoAmarillo transition-colors cursor-default px-2">NETFLIX</span>
+                    <span class="font-inter text-2xl font-light italic text-white/25 hover:text-logoAzulClaro transition-colors cursor-default px-2">Disney+</span>
+                    <span class="font-montserrat text-2xl font-black text-white/25 hover:text-logoVerde transition-colors cursor-default px-2">HBO MAX</span>
+                    <span class="font-inter text-2xl font-bold text-white/25 hover:text-white transition-colors cursor-default px-2">Amazon</span>
+                    <span class="font-montserrat text-2xl font-black text-white/25 hover:text-logoAmarillo transition-colors cursor-default px-2">TELEVISA</span>
+                    <span class="font-inter text-2xl font-light text-white/25 hover:text-logoAzulClaro transition-colors cursor-default px-2">Paramount</span>
+                    <span class="font-montserrat text-2xl font-black text-white/25 hover:text-logoVerde transition-colors cursor-default px-2">SONY</span>
+                    <span class="font-inter text-2xl font-bold italic text-white/25 hover:text-white transition-colors cursor-default px-2">NEUMANN</span>
+                    <span class="font-montserrat text-2xl font-black text-white/25 hover:text-logoAmarillo transition-colors cursor-default px-2">UNIVERSAL</span>
+                    <span class="font-inter text-2xl font-light text-white/25 hover:text-logoAzulClaro transition-colors cursor-default px-2">Warner</span>
+                </template>
+                <div id="brand-ticker-a" class="flex gap-16 items-center"></div>
+                <div id="brand-ticker-b" class="flex gap-16 items-center ml-16"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== CONTACTO ===================== -->
     <section id="contacto" class="py-32 max-w-7xl mx-auto px-6">
         <div class="mb-20 text-center reveal">
-            <h2 class="font-montserrat text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter">CONTÁCTANOS</h2>
-            <div class="flex justify-center gap-1.5">
-                <div class="w-10 h-1.5 bg-logoAmarillo rounded-full"></div>
-                <div class="w-10 h-1.5 bg-logoVerde rounded-full"></div>
-                <div class="w-10 h-1.5 bg-logoAzulClaro rounded-full"></div>
+            <div class="inline-flex items-center gap-2 mb-5 text-logoAmarillo text-[11px] font-bold uppercase tracking-widest">
+                <div class="w-6 h-px bg-logoAmarillo"></div>
+                Hablemos
+                <div class="w-6 h-px bg-logoAmarillo"></div>
             </div>
+            <h2 class="font-montserrat text-4xl md:text-6xl font-black text-white mb-4 tracking-tighter">CONTÁCTANOS</h2>
+            <p class="text-textoSecundario font-light max-w-lg mx-auto">Cuéntanos de tu proyecto y te responderemos en menos de 24 horas.</p>
         </div>
 
-        <div class="reveal grid md:grid-cols-2 gap-12 bg-panel p-8 md:p-16 rounded-[3rem] border border-white/5 overflow-hidden relative shadow-2xl">
-            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-logoAzulClaro/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+        <div class="reveal relative overflow-hidden grid md:grid-cols-2 gap-12 bg-panel p-8 md:p-16 rounded-[3rem] border border-white/5 shadow-2xl">
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-logoAzulClaro/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+            <div class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-logoAmarillo/3 rounded-full blur-[80px] pointer-events-none -z-10"></div>
 
             <div class="flex flex-col justify-center">
-                <h3 class="text-3xl font-montserrat font-black text-white mb-10">Inicia tu <span class="text-logoAmarillo">Proyecto</span></h3>
+                <h3 class="text-3xl font-montserrat font-black text-white mb-3">Inicia tu <span class="text-logoAmarillo">Proyecto</span></h3>
+                <p class="text-textoSecundario text-sm font-light mb-10">Postproducción de audio, doblaje, localización o renta de instalaciones.</p>
 
-                <div class="space-y-8 text-sm text-textoSecundario font-medium">
-                    <div class="flex items-center gap-5 group">
-                        <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-logoAmarillo transition-colors">
-                            <i data-lucide="map-pin" class="text-logoAmarillo"></i>
+                <div class="space-y-6 text-sm text-textoSecundario font-medium">
+                    <a href="https://maps.google.com/?q=Sevilla+618+Portales+CDMX" target="_blank" rel="noopener noreferrer"
+                       class="flex items-center gap-5 group hover:text-textoPrincipal transition-colors">
+                        <div class="w-12 h-12 shrink-0 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-logoAmarillo transition-colors">
+                            <i data-lucide="map-pin" class="text-logoAmarillo w-5 h-5"></i>
                         </div>
-                        <p>Sevilla 618, Colonia Portales,<br>CDMX CP 03300, México</p>
-                    </div>
-                    <div class="flex items-center gap-5 group">
-                        <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-logoVerde transition-colors">
-                            <i data-lucide="phone" class="text-logoVerde"></i>
+                        <span>Sevilla 618, Col. Portales,<br>CDMX CP 03300, México</span>
+                    </a>
+                    <a href="tel:+525591832460" class="flex items-center gap-5 group hover:text-textoPrincipal transition-colors">
+                        <div class="w-12 h-12 shrink-0 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-logoVerde transition-colors">
+                            <i data-lucide="phone" class="text-logoVerde w-5 h-5"></i>
                         </div>
-                        <p>(52+55) 9183-2460 al 69</p>
-                    </div>
-                    <div class="flex items-center gap-5 group">
-                        <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-logoAzulClaro transition-colors">
-                            <i data-lucide="mail" class="text-logoAzulClaro"></i>
+                        <span>(52+55) 9183-2460 al 69</span>
+                    </a>
+                    <a href="mailto:contacto@candiani.tv" class="flex items-center gap-5 group hover:text-textoPrincipal transition-colors">
+                        <div class="w-12 h-12 shrink-0 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-logoAzulClaro transition-colors">
+                            <i data-lucide="mail" class="text-logoAzulClaro w-5 h-5"></i>
                         </div>
-                        <p>doblaje@candiani.tv</p>
+                        <span>contacto@candiani.tv</span>
+                    </a>
+                </div>
+
+                <!-- Social proof -->
+                <div class="mt-10 pt-8 border-t border-white/5 flex items-center gap-4">
+                    <div class="flex -space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-logoAmarillo/20 border-2 border-panel flex items-center justify-center text-xs font-bold text-logoAmarillo">A</div>
+                        <div class="w-8 h-8 rounded-full bg-logoVerde/20 border-2 border-panel flex items-center justify-center text-xs font-bold text-logoVerde">B</div>
+                        <div class="w-8 h-8 rounded-full bg-logoAzulClaro/20 border-2 border-panel flex items-center justify-center text-xs font-bold text-logoAzulClaro">C</div>
                     </div>
+                    <p class="text-xs text-textoSecundario">+50 proyectos en curso este año</p>
                 </div>
             </div>
 
-            <form class="space-y-5" onsubmit="event.preventDefault(); alert('¡Mensaje enviado! Nos pondremos en contacto pronto.');">
-                <div class="grid grid-cols-2 gap-5">
-                    <input type="text" placeholder="Nombre" required class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoAmarillo focus:bg-noche outline-none transition-all text-white placeholder-textoSecundario/50">
-                    <input type="tel" placeholder="Teléfono" class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoVerde focus:bg-noche outline-none transition-all text-white placeholder-textoSecundario/50">
+            <form id="contact-form" class="space-y-5" novalidate>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div class="flex flex-col gap-1.5">
+                        <label for="f-nombre" class="text-xs font-bold text-textoSecundario uppercase tracking-wider">Nombre *</label>
+                        <input id="f-nombre" name="nombre" type="text" placeholder="Tu nombre" required
+                               class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoAmarillo focus:bg-noche outline-none transition-all text-white placeholder-textoSecundario/40">
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <label for="f-tel" class="text-xs font-bold text-textoSecundario uppercase tracking-wider">Teléfono</label>
+                        <input id="f-tel" name="telefono" type="tel" placeholder="+52 55 0000 0000"
+                               class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoVerde focus:bg-noche outline-none transition-all text-white placeholder-textoSecundario/40">
+                    </div>
                 </div>
-                <input type="email" placeholder="Correo Corporativo" required class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoAzulClaro focus:bg-noche outline-none transition-all text-white placeholder-textoSecundario/50">
-                <textarea rows="5" placeholder="Cuéntanos sobre tu proyecto..." required class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoAmarillo focus:bg-noche outline-none transition-all resize-none text-white placeholder-textoSecundario/50"></textarea>
-                <button type="submit" class="w-full bg-gradient-to-r from-logoAmarillo via-logoVerde to-logoAzulClaro text-noche py-4.5 rounded-xl font-black uppercase text-sm tracking-widest hover:shadow-[0_0_30px_rgba(242,231,24,0.3)] hover:-translate-y-1 transition-all duration-300">
-                    Enviar Solicitud
+                <div class="flex flex-col gap-1.5">
+                    <label for="f-email" class="text-xs font-bold text-textoSecundario uppercase tracking-wider">Correo Corporativo *</label>
+                    <input id="f-email" name="email" type="email" placeholder="tu@empresa.com" required
+                           class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoAzulClaro focus:bg-noche outline-none transition-all text-white placeholder-textoSecundario/40">
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <label for="f-servicio" class="text-xs font-bold text-textoSecundario uppercase tracking-wider">Servicio de interés</label>
+                    <select id="f-servicio" name="servicio"
+                            class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoAmarillo focus:bg-noche outline-none transition-all text-textoPrincipal appearance-none">
+                        <option value="" class="bg-noche">Selecciona un servicio...</option>
+                        <option value="doblaje" class="bg-noche">Doblaje</option>
+                        <option value="postproduccion" class="bg-noche">Postproducción de Audio</option>
+                        <option value="mezcla" class="bg-noche">Mezcla Final / Dolby Atmos</option>
+                        <option value="localizacion" class="bg-noche">Localización y Subtitulaje</option>
+                        <option value="tax1379" class="bg-noche">TAX-1379 / Corrección de Color</option>
+                        <option value="otro" class="bg-noche">Otro</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <label for="f-mensaje" class="text-xs font-bold text-textoSecundario uppercase tracking-wider">Descripción del Proyecto *</label>
+                    <textarea id="f-mensaje" name="mensaje" rows="4" placeholder="Cuéntanos sobre tu producción, plazos y requerimientos..." required
+                              class="w-full bg-noche/50 border border-white/10 p-4 rounded-xl focus:border-logoAmarillo focus:bg-noche outline-none transition-all resize-none text-white placeholder-textoSecundario/40"></textarea>
+                </div>
+
+                <button type="submit" id="submit-btn"
+                        class="group w-full bg-gradient-to-r from-logoAmarillo via-logoVerde to-logoAzulClaro text-noche py-4 rounded-xl font-black uppercase text-sm tracking-widest hover:shadow-[0_0_30px_rgba(242,231,24,0.3)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                    <span id="btn-label">Enviar Solicitud</span>
+                    <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 transition-transform" id="btn-icon"></i>
                 </button>
+
+                <div id="form-feedback" class="hidden text-center py-3 px-4 rounded-xl text-sm font-bold"></div>
             </form>
         </div>
     </section>
 
-    <footer class="py-12 border-t border-white/5 bg-panel text-center">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <img src="https://audiomaster.com.mx/img/AudioMasterCandiani_iso.png" alt="Logo Footer" class="h-8 opacity-50 grayscale hover:grayscale-0 transition-all">
-            <p class="text-[10px] font-bold uppercase tracking-[0.5em] text-textoSecundario">
-                © 2026 AUDIOMASTER CANDIANI | <span class="text-logoAmarillo">MÉXICO</span>
-            </p>
-        </div>
-    </footer>
+    <!-- ===================== FOOTER ===================== -->
+    <div id="footer-container"></div>
 
+    <!-- ===================== SCRIPTS ===================== -->
     <script>
-        // 1. Inicializar Iconos Lucide
-        lucide.createIcons();
+    document.addEventListener('DOMContentLoaded', () => {
 
-        // 2. Lógica del Menú Móvil
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-        let open = false;
-
-        function toggleMenu() {
-            open = !open;
-            mobileMenu.classList.toggle('opacity-0', !open);
-            mobileMenu.classList.toggle('pointer-events-none', !open);
-            // Cambiar icono
-            menuBtn.innerHTML = open
-                ? '<i data-lucide="x"></i>'
-                : '<i data-lucide="menu"></i>';
-            lucide.createIcons();
+        // 1. Inject shared components (from components.js)
+        if (typeof injectComponents === 'function') {
+            injectComponents();
         }
 
-        // Función que inyecta los componentes
-        function injectComponents() {
-            document.getElementById('navbar-container').innerHTML = NAVBAR_HTML;
-            document.getElementById('footer-container').innerHTML = FOOTER_HTML;
+        // Re-init lucide icons (needed after injection)
+        if (typeof lucide !== 'undefined') lucide.createIcons();
 
-            // Re-ejecutar efecto de scroll para el navbar inyectado
-            const navbar = document.getElementById('main-navbar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('py-3', 'bg-noche/95', 'shadow-lg');
-                    navbar.classList.remove('py-5', 'bg-noche/80');
-                } else {
-                    navbar.classList.add('py-5', 'bg-noche/80');
-                    navbar.classList.remove('py-3', 'bg-noche/95', 'shadow-lg');
-                }
+        // 2. Scroll reveal
+        if (typeof initReveal === 'function') initReveal();
+        else {
+            // Fallback inline reveal
+            const obs = new IntersectionObserver((entries, o) => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); o.unobserve(e.target); } });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        }
+
+        // 3. Animated counters
+        if (typeof initCounters === 'function') initCounters();
+
+        // 4. Service tabs
+        const tabBtns  = document.querySelectorAll('.tab-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.dataset.tab;
+
+                // Update buttons
+                tabBtns.forEach(b => {
+                    const active = b.dataset.tab === target;
+                    b.classList.toggle('bg-logoAmarillo', active);
+                    b.classList.toggle('text-noche',      active);
+                    b.classList.toggle('bg-white/5',     !active);
+                    b.classList.toggle('border',         !active);
+                    b.classList.toggle('border-white/10',!active);
+                    b.classList.toggle('text-textoSecundario', !active);
+                    b.setAttribute('aria-selected', active);
+                });
+
+                // Update panels
+                tabPanels.forEach(p => {
+                    const active = p.id === `tab-${target}`;
+                    p.classList.toggle('active', active);
+
+                    // Re-trigger reveal on newly shown cards
+                    if (active) {
+                        p.querySelectorAll('.reveal:not(.active)').forEach(el => {
+                            setTimeout(() => el.classList.add('active'), 50);
+                        });
+                    }
+                });
             });
-        }
-
-        menuBtn.onclick = toggleMenu;
-        mobileLinks.forEach(link => link.onclick = toggleMenu);
-
-        // 3. Header dinámico al hacer scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('py-3', 'bg-noche/95', 'shadow-lg');
-                navbar.classList.remove('py-5', 'bg-noche/80');
-            } else {
-                navbar.classList.add('py-5', 'bg-noche/80');
-                navbar.classList.remove('py-3', 'bg-noche/95', 'shadow-lg');
-            }
         });
 
-        // 4. Animaciones "Reveal" al hacer scroll
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealOptions = {
-            threshold: 0.15, // Ejecuta cuando el 15% del elemento es visible
-            rootMargin: "0px 0px -50px 0px"
-        };
+        // 5. Brand ticker — clone for seamless loop
+        const tmpl = document.getElementById('brand-list');
+        const tickerA = document.getElementById('brand-ticker-a');
+        const tickerB = document.getElementById('brand-ticker-b');
+        if (tmpl && tickerA && tickerB) {
+            const content = tmpl.innerHTML;
+            tickerA.innerHTML = content;
+            tickerB.innerHTML = content;
+        }
 
-        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target); // Solo animar una vez
+        // 6. Contact form
+        const form = document.getElementById('contact-form');
+        const feedback = document.getElementById('form-feedback');
+        const btnLabel = document.getElementById('btn-label');
+        const btnIcon  = document.getElementById('btn-icon');
+        const submitBtn = document.getElementById('submit-btn');
+
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Basic validation
+                const required = form.querySelectorAll('[required]');
+                let valid = true;
+                required.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.classList.add('border-red-500/60');
+                        valid = false;
+                    } else {
+                        field.classList.remove('border-red-500/60');
+                    }
+                });
+                if (!valid) {
+                    showFeedback('Por favor completa todos los campos requeridos.', 'error');
+                    return;
+                }
+
+                // Simulate submission
+                submitBtn.disabled = true;
+                btnLabel.textContent = 'Enviando...';
+
+                await new Promise(r => setTimeout(r, 1400));
+
+                submitBtn.disabled = false;
+                btnLabel.textContent = 'Enviado ✓';
+                showFeedback('¡Gracias! Nos pondremos en contacto en menos de 24 horas.', 'success');
+                form.reset();
+
+                setTimeout(() => { btnLabel.textContent = 'Enviar Solicitud'; }, 3000);
             });
-        }, revealOptions);
 
-        revealElements.forEach(el => revealOnScroll.observe(el));
+            function showFeedback(msg, type) {
+                feedback.textContent = msg;
+                feedback.className = `text-center py-3 px-4 rounded-xl text-sm font-bold ${
+                    type === 'success'
+                        ? 'bg-logoVerde/15 border border-logoVerde/30 text-logoVerde'
+                        : 'bg-red-500/15 border border-red-500/30 text-red-400'
+                }`;
+                feedback.classList.remove('hidden');
+                setTimeout(() => feedback.classList.add('hidden'), 5000);
+            }
+        }
+    });
     </script>
 </body>
 </html>
